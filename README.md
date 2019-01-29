@@ -1,2 +1,1 @@
-# megaR
-megaR: an R package for interactive metagenomic profiling
+Check wiki page for tutorial
