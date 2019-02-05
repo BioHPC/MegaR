@@ -234,7 +234,7 @@ server <- function(input, output, session){
   })
   output$mdataTbl <- renderTable({
     req(input$file1otutable$datapath)
-    return(readmetaphlan(input$file1otutable$datapath))
+    return(readmydata(input$file1otutable$datapath))
   }, rownames = TRUE)
   
   output$mGoodTbl <- renderTable({
