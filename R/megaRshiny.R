@@ -104,8 +104,11 @@ ui <- dashboardPage(
                                                          ))))
                                               
                                    ),
-                                   tabPanel("Validate",
-                                            "Do validation here"),
+                                    tabPanel("Validate",sidebarLayout(sidebarPanel(
+                                     numericInput("ntimes", "number of validation set",min= 1, max = 10,  step = 1, value = 3)),
+                                     mainPanel(tabsetPanel(tabPanel("Accuracy", verbatimTextOutput("Acc")))
+                                   ))
+                                            ),                                           
                                    navbarMenu("Prediction", 
                                               tabPanel("Use most recent model",
                                                        sidebarLayout(sidebarPanel(
@@ -193,8 +196,11 @@ ui <- dashboardPage(
                                               ))))
                                               
                                    ),
-                                   tabPanel("Validate",
-                                            "Do validation here"),
+                                    tabPanel("Validate",sidebarLayout(sidebarPanel(
+                                     numericInput("qntimes", "number of validation set",min= 1, max = 10,  step = 1, value = 3)),
+                                     mainPanel(tabsetPanel(tabPanel("Accuracy", verbatimTextOutput("qAcc")))
+                                   ))
+                                            ),                                           
                                    navbarMenu("Prediction", 
                                               tabPanel("Use most recent model",
                                                        sidebarLayout(sidebarPanel(
@@ -298,6 +304,11 @@ server <- function(input, output, session){
     plotimportantfeatures(myrfmodel()[[3]], 10)
   })
   
+  output$Acc <- renderPrint({
+    req(input$ntimes)
+    validation(input$ntimes, myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))
+  })
+  
   output$Preresult <- renderTable({
     req(input$unknw$datapath)
     a<- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
@@ -387,6 +398,10 @@ server <- function(input, output, session){
   })
   output$qimptFeature <- renderPlot({
     plotimportantfeatures(qmyrfmodel()[[3]], 10)
+  })
+  output$qAcc <- renderPrint({
+    req(input$qntimes)
+    validation(input$qntimes, qmyGoodfeature(), input$qclassid, input$qsampleid,input$qruleout, input$qpsd,readmetadata(input$qmyresponseVector$datapath))
   })
   
   output$qdownload1 <- renderUI({
