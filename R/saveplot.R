@@ -1,4 +1,11 @@
+' Plot function
+#'
+#' This is a internal function. This function allows the program to
+#' save the plot generated in the program.
 
+#' @param file name of the file where data is to be stored
+#' @param plotIn the plot which is stored
+#' import ggsave from ggplot2
 savePlot <- function(file, plotIn) {
   ggsave(
     device = "pdf",
