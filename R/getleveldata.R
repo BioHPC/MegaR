@@ -1,3 +1,9 @@
+#' megaR getLevelData 
+#'
+#' This is an internal function used to extract either the species or genus level of information
+#' @param alltable the taxonomic table
+#' @param leveld the taxonomic level at which to select the feature
+
 getLevelData <- function(alltable, leveld){
   #if data is biomfile
   if(all(grepl("s__", rownames(alltable))) == TRUE){
