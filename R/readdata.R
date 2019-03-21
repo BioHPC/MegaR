@@ -1,3 +1,8 @@
+#' megaR analysis
+#' This is internal function to read data 
+
+#' @param x the path to the file 
+
 readmetadata <- function(x){
   mymetaData<- read.table(x,
                           header = TRUE, sep = "\t", stringsAsFactors = FALSE)
