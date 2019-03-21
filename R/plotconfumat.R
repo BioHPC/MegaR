@@ -2,8 +2,6 @@
 #'
 #' This is an internal function used to plot the confusion Matrix
 #'
-#' @param analyzeData  dataframe to be analyzed
-#' @param biomaRt.go.df dataframe of gene id to GO term
 #' @param testdata  testdata
 #' @param rfmodel the model on which classification is done
 
