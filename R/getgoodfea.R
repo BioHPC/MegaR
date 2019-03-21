@@ -1,3 +1,12 @@
+#'megaR getGoodfeature
+#'
+#' This is an internal function used to collect good features
+#'
+#' @param alltable2  table containing all the features analyzed
+#' @param threshold threshold of the value of feature that should be across the sample
+#' @param samplePercent percentage of sample that should contain the threshold amount of value in its feature
+#' @param normval wheather to normalize using cumulative sum normalization or not
+
 getGoodfeature <- function(alltable2, threshold, samplePercent, normval){ # pass leveled data here
   row2keep <- c()
   cutoff <- ceiling( (samplePercent/100) * ncol(alltable2) ) 
