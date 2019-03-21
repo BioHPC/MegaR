@@ -1,3 +1,9 @@
+#' megaR analysis
+#'
+#' This is an internal function used to predict the given dataset.
+#'
+#' @param unknormdata unknown dataset
+#' @param a model list with elements ******
 getunknpredict <- function(unknormdata, a){
   #unknormdata <- getGoodfeature(getLevelDataM(x,level), threshold, samplePercent , normval )
   
