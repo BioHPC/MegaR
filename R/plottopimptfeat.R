@@ -1,4 +1,7 @@
-
+#' megaR analysis
+#'
+#' @param RF_state_classify the random forest classifier
+#' @param noOfFeature number of important feature to display in  barplot 
 plotimportantfeatures <- function(RF_state_classify, noOffeature){
 fc<- colorRampPalette(rev(brewer.pal(n = 9, "Blues")))
 RF_state_classify_imp <- as.data.frame( RF_state_classify$importance )
