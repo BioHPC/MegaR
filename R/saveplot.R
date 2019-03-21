@@ -5,7 +5,7 @@
 
 #' @param file name of the file where data is to be stored
 #' @param plotIn the plot which is stored
-#' import ggsave from ggplot2
+#' import ggsave from ggplot2**
 savePlot <- function(file, plotIn) {
   ggsave(
     device = "pdf",
