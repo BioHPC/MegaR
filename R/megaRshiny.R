@@ -49,7 +49,7 @@ ui <- dashboardPage(
                                    ),
                                    tabPanel("Preprocessing", 
                                             fluidRow(sidebarLayout(sidebarPanel(
-                                              radioButtons("level", "Criteria for feature selection",choices = c("Genus Level", "Species Level"),selected = "Genus"),
+                                              radioButtons("level", "Criteria for feature selection",choices = c("Genus Level", "Species Level", "All Level"),selected = "Genus"),
                                               numericInput("threshold", "THRESHOLD",min= 0, max = 100,  step = 0.001, value = 0.003),
                                               sliderInput("samplePercent", "Percentage of Sample", min = 0 , max = 100 , step = 1, value=5),
                                               helpText("OTU that have less than the the threshold value in given percentage of sample are removed."),
@@ -142,7 +142,7 @@ ui <- dashboardPage(
                                    ),
                                    tabPanel("Preprocessing", 
                                             fluidRow(sidebarLayout(sidebarPanel(
-                                              radioButtons("qlevel", "Criteria for feature selection",choices = c("Genus Level", "Species Level"), selected = "Genus"),
+                                              radioButtons("qlevel", "Criteria for feature selection",choices = c("Genus Level", "Species Level", "All Level"), selected = "Genus"),
                                               numericInput("qthreshold", "THRESHOLD",min= 0, max = 100,  step = 0.001, value = 0.003),
                                               sliderInput("qsamplePercent", "Percentage of Sample", min = 0 , max = 100 , step = 1, value=5),
                                               radioButtons('qnorm' ,"Normalization", choices = c(YES = "css"  , NO = "none"), selected = ""),
