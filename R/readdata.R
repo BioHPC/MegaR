@@ -9,12 +9,13 @@ readmetadata <- function(x){
   return(mymetaData)
 }
 
-readmydata<- function(x){
+readmydata <- function(x){
   success <- try(otufromqiime <- read_biom(x), silent = TRUE)
   is.error <- function(x) inherits(x, "try-error")
   
   if (is.error(success)==TRUE){
     qiimedatamatrix <- read.table(x,header = TRUE, sep= "\t", row.names = 1, quote = "", stringsAsFactors = FALSE)
+    colnames(qiimedatamatrix) <- str_remove(colnames(qiimedatamatrix), "X")
   }
   else if(is.error(success)==FALSE){
     qiimedata <- read_biom(x)
