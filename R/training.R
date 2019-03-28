@@ -3,7 +3,7 @@ gettrainingdonerf <- function(mytable3, classid, sampleid, ruleout, psd, metadat
   otu_table_scaled <- mytable3
   otu_table_scaled_state <- data.frame(t(otu_table_scaled))  
   #otu_table_scaled_state$country <- mymetadata()[,input$classid][match(str_remove(rownames(otu_table_scaled_state), "_profile"), mymetadata()[,input$sampleid])]  
-  otu_table_scaled_state$country <- metadat[,classid][match(rownames(otu_table_scaled_state), metadat[,sampleid])]
+  otu_table_scaled_state$country <- metadat[,classid][match(str_remove(rownames(otu_table_scaled_state), "_.*"), metadat[,sampleid])]
   otu_table_scaled_state <- na.omit(otu_table_scaled_state)
   otu_table_scaled_state <- otu_table_scaled_state[otu_table_scaled_state$country != ruleout,]
   otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
