@@ -38,5 +38,5 @@ getconfuMat <- function(testdata, rfmodel){
       theme(panel.border = element_rect(linetype = "solid", fill = NA))
     return(p)
   }
-  return (ggplotConfusionMatrix(confu_mat))
+  return (list(ggplotConfusionMatrix(confu_mat), confu_mat))
 }
