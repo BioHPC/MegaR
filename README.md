@@ -35,7 +35,7 @@ The data taken by megaR is **either** OTU table from Metaphlan **or** biom file 
 After the data is uploaded, the contents of the data is displayed under the data tab.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshots/data_upload.png)
-![]https://github.com/BioHPC/megaR/blob/master/screenshots/QIIME_input.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshots/QIIME_input.png)
 
 **Data Preprocessing**
 
@@ -65,4 +65,4 @@ An additional feature of tool that can improve accuracy is **class to remove**  
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-[[https://github.com/BioHPC/megaR/blob/master/screenshots/Prediction.png]]
+![](https://github.com/BioHPC/megaR/blob/master/screenshots/Prediction.png)
