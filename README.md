@@ -26,7 +26,8 @@ MegaR provides an unprecedented opportunity to develop  machine learning models 
 
 The general workflow is described in below.
 
-[[https://github.com/BioHPC/megaR/blob/master/screenshots/Interface.png]]
+
+![](https://github.com/BioHPC/megaR/blob/master/screenshots/Interface.png)
 
 **Data Input**
 
