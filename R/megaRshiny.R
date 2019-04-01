@@ -126,7 +126,7 @@ server <- function(input, output, session){
   })
   
   myrfmodel <- reactive({
-    a<-gettrainingdonerf(myGoodfeature(), input$classid, input$sampleid, input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath), input$mtry, input$ntree)
+    a<-gettrainingdonerf(myGoodfeature(), input$classid, input$sampleid, input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))
     return(a)
   })
   smyrfmodel <- reactive({
