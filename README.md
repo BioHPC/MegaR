@@ -22,7 +22,7 @@ An user-friendly interactive machine learning interface for metagenomic analysis
 ----
 Machine learning has been a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
-MegaR provides an unprecedented opportunity to develop  machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. Currently megaR can handle input from metaphlan and develop random forest models and do the prediction. 
+MegaR provides an unprecedented opportunity to develop  machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
 
 The general workflow is described in below.
 
@@ -31,7 +31,7 @@ The general workflow is described in below.
 
 **Data Input**
 
-The data taken by megaR is **either** OTU table from Metaphlan **or** biom file from qiime.
+megaR can take both otu table and biom file from popular metagenomic profiling tools, metaphlan and qiime. 
 After the data is uploaded, the contents of the data is displayed under the data tab.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshots/data_upload.png)
