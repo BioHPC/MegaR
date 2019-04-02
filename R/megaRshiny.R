@@ -209,7 +209,7 @@ server <- function(input, output, session){
     req(input$unknw$datapath)
     a<- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
                                     input$level),input$threshold, input$samplePercent, input$norm)
-    rownames(a)<- gsub("|", ".", rownames(a), fixed = TRUE)
+    
     getunknpredict(a,myrfmodel())
   }, rownames= TRUE)
   
