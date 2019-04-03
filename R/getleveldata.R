@@ -7,7 +7,10 @@
 getLevelData <- function(alltable, leveld){
   
   if (leveld == "All Level") {
-    
+    if(all(grepl("s__", rownames(alltable))) == TRUE){
+      return(alltable)
+      }
+    else{
     tble <- NULL
     ##unclassified family## all classified
     x <- grep("g__.*"   , rownames(alltable),invert = T, value = T)
@@ -18,8 +21,7 @@ getLevelData <- function(alltable, leveld){
       fmily <- alltable[match(family_unclass, rownames(alltable)), ]
       tble <- rbind(fmily)
     }
-    
-    ## unclassified genus # 2 unclassified
+ 
     x <- grep("s__.*"   , rownames(alltable),invert = T, value = T)
     y <- grep("g__.*" , x, value = TRUE)
     new_count_table <- alltable[match(y, rownames(alltable)),]
@@ -30,7 +32,6 @@ getLevelData <- function(alltable, leveld){
       tble <- rbind(genus, tble)
     }
     
-    ## unclassified species # 48 unclassififed
     x <- grep("t__.*"   , rownames(alltable),invert = T, value = T)
     y <- grep("s__.*" , x, value = TRUE)
     new_count_table <- alltable[match(y, rownames(alltable)),]
@@ -39,13 +40,12 @@ getLevelData <- function(alltable, leveld){
       species <- alltable[match(speci_unclass, rownames(alltable)), ]
       tble <- rbind(tble, species)}
     
-    ### all type # 309 type
     #x <- grep("t__.*"   , rownames(alltable),invert = T, value = T)
     y <- grep("t__" , rownames(alltable), value = TRUE)
     alltype <- alltable[match(y, rownames(alltable)),]
-    
-    #359 features
+   
     tble <- rbind(tble, alltype)
+      }
   }
   else{
     
