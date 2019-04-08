@@ -56,7 +56,7 @@ The plot can be downloaded by clicking in download the plot button to save for f
 
 The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Test_error_plot.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error.png)
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Test_error_statistics.png)
 
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
