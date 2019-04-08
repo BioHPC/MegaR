@@ -150,7 +150,7 @@ server <- function(input, output, session){
   }, rownames =  T)
  
   v1 <- reactiveValues(data = NULL)
-  v <- reactiveValues(data = NULL)
+  v2 <- reactiveValues(data = NULL)
 
   output$AOC <- renderUI({
     req(v1$data)
@@ -173,61 +173,74 @@ server <- function(input, output, session){
     req(input$myresponseVector$datapath)
     myrfmodel()[[3]]
   })
-  #############################################################################################################################################################
+  
   output$myconfusionMatrix <- renderUI({
-    req(v$data)
-    if(v$data == 1){
+    req(v2$data)
+    if(v2$data == 1){
       plotOutput("plotconfumat")
       } else{
       verbatimTextOutput("Statsconfu")
       }
     })
   
-  observeEvent(input$aplot2,{ v$data <- 1  })
-  observeEvent(input$astats2,{v$data <- 2  })
+  observeEvent(input$aplot2,{ v2$data <- 1  })
+  observeEvent(input$astats2,{v2$data <- 2  })
   
     output$plotconfumat <- renderPlot({
-    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v$data]
+    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
   })
  
   output$Statsconfu <- renderPrint({
     req(myrfmodel())
-    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v$data]
+    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
   })
-  ####################################################################################################################################################
+  
   output$imptFeature <- renderPlot({
     req(myrfmodel())
     plotimportantfeatures(myrfmodel()[[3]], 10)
   })
   
   output$Acc <- renderPrint({
-    req(input$ntimes)
-    validation(input$ntimes, myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))
+    req(input$choicemdl)
+    if(input$choicemdl == "rfmodel"){
+    validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))}
+    
+    else if (input$choicemdl == "svmmodel"){
+      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$smyresponseVector$datapath))}
+  
+    else{
+      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$gmyresponseVector$datapath))}
+    
   })
   
   output$Preresult <- renderTable({
     req(input$unknw$datapath)
-    a<- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
+    a <- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
                                     input$level),input$threshold, input$samplePercent, input$norm)
-    
-    getunknpredict(a,myrfmodel())
+    if(input$choicemdl == "rfmodel"){
+    getunknpredict(a,myrfmodel())}
+    if(input$choicemdl == "srfmodel"){
+      getunknpredict(a,smyrfmodel())}
+    if(input$choicemdl == "grfmodel"){
+      getunknpredict(a,gmyrfmodel())
+      }
   }, rownames= TRUE)
   
   ####################################################################################################
   ##### metaphlan svm #############
   
   sv1 <- reactiveValues(data = NULL)
-  sv <- reactiveValues(data = NULL)
-  observeEvent(input$saplot2,{ sv$data <- 1  })
-  observeEvent(input$sastats2,{  sv$data <- 2 })
+  sv2 <- reactiveValues(data = NULL)
+  observeEvent(input$saplot2,{ sv2$data <- 1  })
+  observeEvent(input$sastats2,{ sv2$data <- 2 })
   
   output$sAOC <- renderPrint({
     req(input$smyresponseVector$datapath)
     smyrfmodel()[[3]]
   })
  output$smyconfusionMatrix <- renderUI({
-    req(sv$data)
-    if(sv$data == 1){
+    req(sv2$data)
+    if(sv2$data == 1){
       plotOutput("splotconfumat")
     } else{
       verbatimTextOutput("sStatsconfu")
@@ -250,7 +263,7 @@ server <- function(input, output, session){
   })
   
   gv1 <- reactiveValues(data = NULL)
-  gv <- reactiveValues(data = NULL)
+  gv2 <- reactiveValues(data = NULL)
   
  
   observeEvent(input$gaplot1,{ gv1$data <- 1})
@@ -258,25 +271,95 @@ server <- function(input, output, session){
   
  
   output$gmyconfusionMatrix <- renderUI({
-    req(gv$data)
-    if(gv$data == 1){
+    req(gv2$data)
+    if(gv2$data == 1){
       plotOutput("gplotconfumat")
     }else{
       verbatimTextOutput("gStatsconfu")
     }
   })
   
-  observeEvent(input$gaplot2,{ gv$data <- 1  })
-  observeEvent(input$gastats2,{ gv$data <- 2})
+  observeEvent(input$gaplot2,{ gv2$data <- 1  })
+  observeEvent(input$gastats2,{ gv2$data <- 2})
   
   output$gplotconfumat <- renderPlot({
-    getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]])[gv$data]
+    getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]])[gv2$data]
   })
   
   output$gStatsconfu <- renderPrint({
     req(gmyrfmodel())
-    getconfuMat(gmyrfmodel()[[2]],gmyrfmodel()[[3]])[gv$data]
+    getconfuMat(gmyrfmodel()[[2]],gmyrfmodel()[[3]])[gv2$data]
   })
+  output$download1 <- renderUI({
+    req(v1$data)
+    if(v1$data == 1) {
+      downloadButton('down', 'Download Output File')
+    }
+  })
+  output$download2 <- renderUI({
+    req(v2$data)
+    if(v2$data == 1){
+      downloadButton('confudown', 'Download Output File')
+    }
+  })
+  output$sdownload2 <- renderUI({
+    req(sv2$data)
+    if(sv2$data == 1){
+      downloadButton('sconfudown', 'Download Output File')
+    }
+  })
+  output$gdownload2 <- renderUI({
+    req(gv2$data)
+    if(gv2$data == 1){
+      downloadButton('gconfudown', 'Download Output File')
+    }
+  })
+  output$download3 <- renderUI({
+    if(!is.null(myrfmodel())) {
+      downloadButton('imptfeat', 'Download Output File')
+    }
+  })
+  
+  output$down <- downloadHandler(
+    filename = "iris.pdf",
+    content = function(file){
+      pdf(file) # open the pdf device
+      print(plot(myrfmodel()[[3]])) 
+      dev.off()
+    }
+  )
+  output$confudown <- downloadHandler(
+    filename = "iris.pdf",
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print( getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]]))
+      dev.off()
+    }
+  )
+  output$sconfudown <- downloadHandler(
+    filename = "iris.pdf",
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print( getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]]))
+      dev.off()
+    }
+  )
+  output$gconfudown <- downloadHandler(
+    filename = "iris.pdf",
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print( getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]]))
+      dev.off()
+    }
+  )
+  output$imptfeat <- downloadHandler(
+    filename = "iris.pdf",
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print(plotimportantfeatures(myrfmodel()[[3]], 10))
+      dev.off()
+    }
+  )
 }
 
 shinyApp(ui, server)
