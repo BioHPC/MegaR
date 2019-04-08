@@ -57,7 +57,7 @@ ui <-fluidPage(theme =shinytheme("flatly"),
                                                          
                                                        ), mainPanel(tabsetPanel(
                                                          tabPanel("Train Error",  verbatimTextOutput("gAOC")), #actionButton("gaplot1", "Plot train error"), 
-                                                         tabPanel("Test Error", uiOutput("gmyconfusionMatrix"), actionButton("gaplot2", "Plot test error"), actionButton("gastats2", "Stats of the test error"))
+                                                         tabPanel("Test Error", uiOutput("gmyconfusionMatrix"), actionButton("gaplot2", "Plot test error"),uiOutput("gdownload2") ,actionButton("gastats2", "Stats of the test error"))
                                                          #tabPanel("Important feature", imageOutput("gimptFeature"))#,uiOutput("gdownload3"))
                                                        )))),
                                               tabPanel("Random Forest",
@@ -78,7 +78,7 @@ ui <-fluidPage(theme =shinytheme("flatly"),
                                                                                       uiOutput("download1"), 
                                                                                       actionButton("astats1", "Stats of the train error")), 
                                                                              #tabPanel("Test Error", verbatimTextOutput("myconfusionMatrix"), uiOutput("download2")),
-                                                                             tabPanel("Test Error", uiOutput("myconfusionMatrix"), actionButton("aplot2", "Plot test error"), actionButton("astats2", "Stats of the test error")),# 
+                                                                             tabPanel("Test Error", uiOutput("myconfusionMatrix"),uiOutput("download2"), actionButton("aplot2", "Plot test error"), actionButton("astats2", "Stats of the test error")),# 
                                                                              tabPanel("Important feature", imageOutput("imptFeature"),   uiOutput("download3")) #, output="imptfeat", label = "Download the plot"))
                                                        )))
                                                        ),
@@ -91,14 +91,13 @@ ui <-fluidPage(theme =shinytheme("flatly"),
                                                          textInput("sruleout", label = "Text input", value = "EST"),
                                                          textInput("svmtd", label = "SVM Method", value = "svmLinear")
                                                        ), mainPanel(tabsetPanel(tabPanel("Train Error",verbatimTextOutput("sAOC")),#actionButton("saplot1", "Plot train error"),
-                                                                                tabPanel("Test Error", uiOutput("smyconfusionMatrix"), actionButton("saplot2", "Plot test error"), actionButton("sastats2", "Stats of the test error"))
+                                                                                tabPanel("Test Error", uiOutput("smyconfusionMatrix"), actionButton("saplot2", "Plot test error"),uiOutput("sdownload2") ,actionButton("sastats2", "Stats of the test error"))
                                                                                 #tabPanel("Important feature", imageOutput("simptFeature"),uiOutput("sdownload3"))
                                                        ))))
                                               
                                    ),
                                    tabPanel("Validate",sidebarLayout(sidebarPanel(
                                      radioButtons("choicemdl", label = "Choose model", choices = c(RandomForest = "rfmodel" , SVM = "svmmodel", GLM = "glmmodel"), selected = ""),
-
                                      numericInput("ntimes", "number of validation set",min= 1, max = 10,  step = 1, value = 3)),
                                      mainPanel(tabsetPanel(tabPanel("Accuracy", verbatimTextOutput("Acc")))
                                      ))
