@@ -66,12 +66,12 @@ ui <-fluidPage(theme =shinytheme("flatly"),
                                                          numericInput("classid", label = "column number for class info", min = 1, max = 100, value =8),
                                                          numericInput("sampleid", label = "column number for sampleid", min = 1, max = 100, value =53),
                                                          numericInput("psd", "percentage of data in training", min = 60, max = 100, value = 90),
-                                                         textInput("ruleout", label = "Remove class", value = "EST"),
+                                                         textInput("ruleout", label = "Remove class", value = "EST")
                                                          #tags$hr(),
                                                          #actionButton("bltModel", "Build model")
-                                                         numericInput("mtry", "Number of predictor varibale to try at each split" ,value =5),
-                                                         numericInput("ntrees", "Number of trees to build the model", value = 10),
-                                                         helpText("Increasing number of tree increase robustness, decreasing number of mtry increase roustness?")
+                                                         #numericInput("mtry", "Number of predictor varibale to try at each split" ,value =5),
+                                                         #numericInput("ntrees", "Number of trees to build the model", value = 10),
+                                                         #helpText("Increasing number of tree increase robustness, decreasing number of mtry increase roustness?")
                                                        ),
                                                        mainPanel(tabsetPanel(tabPanel("Train Error", uiOutput("AOC"),
                                                                                       actionButton("aplot1", "Plot train error"),
