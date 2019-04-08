@@ -53,7 +53,7 @@ The error rate of prediction on test set is a better estimate of model accuracy 
 
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Top_ten_impt-feature.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Top_ten_impt_feature.png)
 
 An additional feature of tool that can improve accuracy is **class to remove**  tab. When more than two class are present, a class can be removed to increase accuracy. This also allows to remove control from the class category.
  
@@ -64,4 +64,4 @@ An additional feature of tool that can improve accuracy is **class to remove**  
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshots/Prediction.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction-02.png)
