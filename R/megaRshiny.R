@@ -97,6 +97,8 @@ ui <-fluidPage(theme =shinytheme("flatly"),
                                               
                                    ),
                                    tabPanel("Validate",sidebarLayout(sidebarPanel(
+                                     radioButtons("choicemdl", label = "Choose model", choices = c(RandomForest = "rfmodel" , SVM = "svmmodel", GLM = "glmmodel"), selected = ""),
+
                                      numericInput("ntimes", "number of validation set",min= 1, max = 10,  step = 1, value = 3)),
                                      mainPanel(tabsetPanel(tabPanel("Accuracy", verbatimTextOutput("Acc")))
                                      ))
