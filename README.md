@@ -15,12 +15,13 @@ An user-friendly interactive machine learning interface for metagenomic analysis
 * Libraries
     * shiny; shinythemes; shinydashboard; randomForest; stringr; caret
     * plyr; ggplot2; RColorBrewer; biomformat
-----
+    
 * Installation
-megaR is developed as a freely available R shiny interface which can be run on R Studio. The application package can be downloaded from the megaR github page by clicking clone or download button. The downloaded file contains a number of files including  megaRshiny.R in the R folder. 
+   * megaR is developed as a freely available R shiny interface which can be run on R Studio. The application package can be downloaded from the megaR github page by clicking clone or download button. The downloaded file contains a number of files including  megaRshiny.R in the R folder. 
 
 * Running
-This file can be loaded in the R Studio and can be launched by clicking the tiny green button. Please make sure that all the dependent pacakges are preinstalled. Packages can be installed using command install.packages("packagenames")
+   * This file can be loaded in the R Studio and can be launched by clicking the tiny green button. Please make sure that all the dependent pacakges are preinstalled. Packages can be installed using command install.packages("packagenames")
+----
 
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
@@ -65,7 +66,7 @@ From a practical perspective, it is important to identify features that are impo
 An additional feature of tool that can improve accuracy is **class to remove**  tab. When more than two class are present, a class can be removed to increase accuracy. This also allows to remove control from the class category.
  
  **Validation**
- ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Validation.png)
+ ![](https://github.com/BioHPC/megaR/blob/master/screenshot/validation.png)
  
 **Prediction**
 
