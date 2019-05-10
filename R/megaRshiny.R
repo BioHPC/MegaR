@@ -207,7 +207,7 @@ server <- function(input, output, session){
     validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))}
     
     else if (input$choicemdl == "svmmodel"){
-      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$smyresponseVector$datapath))}
+      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$smyresponseVector$datapath) ,input$svmtd)}
   
     else{
       validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$gmyresponseVector$datapath))}
