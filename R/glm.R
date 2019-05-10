@@ -1,4 +1,4 @@
-gettrainingdoneglm <- function(mytable3, classid, sampleid, ruleout, psd, metadat,svmmethod){
+gettrainingdoneglm <- function(mytable3, classid, sampleid, ruleout, psd, metadat){
   otu_table_scaled <- mytable3
   otu_table_scaled_state <- data.frame(t(otu_table_scaled))  
   #otu_table_scaled_state$country <- mymetadata()[,input$classid][match(str_remove(rownames(otu_table_scaled_state), "_profile"), mymetadata()[,input$sampleid])]  
