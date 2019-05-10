@@ -25,7 +25,7 @@ validation <- function(N,  modelclas ,mytable3, classid, sampleid, ruleout, psd,
       Kpp3[i] <- RF_state_classify_loocv$results$Kappa
     }
     else if(modelclas == "svmmodel"){
-      RF_state_classify_loocv <- train(as.factor(country)~. , data =train , method="svm", trControl=fit_control)
+      RF_state_classify_loocv <- train(as.factor(country)~. , data =train , method="svmLinear", trControl=fit_control)
       Acc3[i] <- RF_state_classify_loocv$results$Accuracy
       Kpp3[i] <- RF_state_classify_loocv$results$Kappa
     }
