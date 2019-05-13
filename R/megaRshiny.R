@@ -1,366 +1,452 @@
-##check prediction
-library(shiny)
-library(shinythemes)
-library(shinydashboard)
-library(randomForest)
-library(stringr)
-library(plyr)
-library(ggplot2)
-library(RColorBrewer)
-library(biomformat)
-library(caret)
-options(warn=-1)
-source("glm.R")
-source("getgoodfea.R")
-source("getleveldata.R")
-source("training.R")
-source("plotconfumat.R")
-source("readdata.R")
-source("prediction.R")
-source("plottopimptfeat.R")
-source("svmmodeltrain.R")
-source("validation.R")
-options(shiny.maxRequestSize=30*1024^2)
+#' Use megaR through shiny interface
+#'
+#' This function allows the user to input data files and alter the input
+#' variables to make sure the formatting is correct.
+#' They can then run the megaR package which will output the results and plots
+#' in the browser and allow the user to download results as needed.
+#'
 
-ui <-fluidPage(theme =shinytheme("flatly"), 
-                        navbarPage("MegaR",id= "inTabsetm",
-                                   tabPanel("Data Input", 
-                                            fluidRow(sidebarLayout(sidebarPanel(fileInput(inputId = "file1otutable", label = "COUNT TABLE", multiple = FALSE)
-                                            ),
-                                            mainPanel(type = "tab",tabsetPanel(
-                                              tabPanel("Data", tableOutput("mdataTbl")) #,
-                                              #tabPanel("G_Heatmap", plotOutput("mgenus")),
-                                              #tabPanel("S_Heatmap", plotOutput("mspecies"))
-                                            ))
-                                            ))
-                                   ),
-                                   tabPanel("Preprocessing", 
-                                            fluidRow(sidebarLayout(sidebarPanel(
-                                              radioButtons("level", "Criteria for feature selection",choices = c("Genus Level", "Species Level", "All Level"),selected = "Genus"),
-                                              numericInput("threshold", "THRESHOLD",min= 0, max = 100,  step = 0.001, value = 0.003),
-                                              sliderInput("samplePercent", "Percentage of Sample", min = 0 , max = 100 , step = 1, value=5),
-                                              helpText("OTU that have less than the the threshold value in given percentage of sample are removed."),
-                                              radioButtons('norm' ,"Normalization", choices = c(YES = "css"  , NO = "none"), selected = "")
-                                              #actionButton("run", "Run preprocessing")
-                                            ),
-                                            mainPanel(tabsetPanel(tabPanel("Data", tableOutput("mGoodTbl"))))
-                                            ))
-                                   ),
-                                   navbarMenu("Model building",
-                                              tabPanel("GLM",
-                                                       sidebarLayout(sidebarPanel (
-                                                         fileInput(inputId = "gmyresponseVector", label = "Please input the class vector", multiple = FALSE),
-                                                         numericInput("gclassid", label = "column number for classid", min = 1, max = 100, value =8),
-                                                         numericInput("gsampleid", label = "column number for sampleid", min = 1, max = 100, value =53),
-                                                         numericInput("gpsd", "percentage of data in training", min = 60, max = 100, value = 90),
-                                                         textInput("gruleout", label = "Text input", value = "EST")
-                                                         
-                                                       ), mainPanel(tabsetPanel(
-                                                         tabPanel("Train Error",  verbatimTextOutput("gAOC")), #actionButton("gaplot1", "Plot train error"), 
-                                                         tabPanel("Test Error", uiOutput("gmyconfusionMatrix"), actionButton("gaplot2", "Plot test error"),uiOutput("gdownload2") ,actionButton("gastats2", "Stats of the test error"))
-                                                         #tabPanel("Important feature", imageOutput("gimptFeature"))#,uiOutput("gdownload3"))
-                                                       )))),
-                                              tabPanel("Random Forest",
-                                                       sidebarLayout(sidebarPanel (
-                                                         fileInput(inputId = "myresponseVector", label = "Please input the class vector", multiple = FALSE),
-                                                         numericInput("classid", label = "column number for class info", min = 1, max = 100, value =8),
-                                                         numericInput("sampleid", label = "column number for sampleid", min = 1, max = 100, value =53),
-                                                         numericInput("psd", "percentage of data in training", min = 60, max = 100, value = 90),
-                                                         textInput("ruleout", label = "Remove class", value = "EST")
-                                                         #tags$hr(),
-                                                         #actionButton("bltModel", "Build model")
-                                                         #numericInput("mtry", "Number of predictor varibale to try at each split" ,value =5),
-                                                         #numericInput("ntrees", "Number of trees to build the model", value = 10),
-                                                         #helpText("Increasing number of tree increase robustness, decreasing number of mtry increase roustness?")
-                                                       ),
-                                                       mainPanel(tabsetPanel(tabPanel("Train Error", uiOutput("AOC"),
-                                                                                      actionButton("aplot1", "Plot train error"),
-                                                                                      uiOutput("download1"), 
-                                                                                      actionButton("astats1", "Stats of the train error")), 
-                                                                             #tabPanel("Test Error", verbatimTextOutput("myconfusionMatrix"), uiOutput("download2")),
-                                                                             tabPanel("Test Error", uiOutput("myconfusionMatrix"),uiOutput("download2"), actionButton("aplot2", "Plot test error"), actionButton("astats2", "Stats of the test error")),# 
-                                                                             tabPanel("Important feature", imageOutput("imptFeature"),   uiOutput("download3")) #, output="imptfeat", label = "Download the plot"))
-                                                       )))
-                                                       ),
-                                              tabPanel("SVM",
-                                                       sidebarLayout(sidebarPanel (
-                                                         fileInput(inputId = "smyresponseVector", label = "Please input the class vector", multiple = FALSE),
-                                                         numericInput("sclassid", label = "column number for classid", min = 1, max = 100, value =8),
-                                                         numericInput("ssampleid", label = "column number for sampleid", min = 1, max = 100, value =53),
-                                                         numericInput("spsd", "percentage of data in training", min = 60, max = 100, value = 90),
-                                                         textInput("sruleout", label = "Text input", value = "EST"),
-                                                         textInput("svmtd", label = "SVM Method", value = "svmLinear")
-                                                       ), mainPanel(tabsetPanel(tabPanel("Train Error",verbatimTextOutput("sAOC")),#actionButton("saplot1", "Plot train error"),
-                                                                                tabPanel("Test Error", uiOutput("smyconfusionMatrix"), actionButton("saplot2", "Plot test error"),uiOutput("sdownload2") ,actionButton("sastats2", "Stats of the test error"))
-                                                                                #tabPanel("Important feature", imageOutput("simptFeature"),uiOutput("sdownload3"))
-                                                       ))))
-                                              
-                                   ),
-                                   tabPanel("Validate",sidebarLayout(sidebarPanel(
-                                     radioButtons("choicemdl", label = "Choose model", choices = c(RandomForest = "rfmodel" , SVM = "svmmodel", GLM = "glmmodel"), selected = ""),
-                                     numericInput("ntimes", "number of validation set",min= 1, max = 10,  step = 1, value = 3)),
-                                     mainPanel(tabsetPanel(tabPanel("Accuracy", verbatimTextOutput("Acc")))
-                                     ))
-                                   ),                                           
-                                   navbarMenu("Prediction", 
-                                              tabPanel("Use most recent model",
-                                                       sidebarLayout(sidebarPanel(
-                                                         fileInput(inputId = "unknw", label= "Please input your unknown dataset", multiple= FALSE)
-                                                       ),
-                                                       mainPanel(tabsetPanel(tabPanel("Prediction", tableOutput("Preresult"))
-                                                                             # tabPanel("Statistics", textOutput("PredictionStatistics")),
-                                                                             # tabPanel("PLOTS", imageOutput("results"))
-                                                       )))),
-                                              tabPanel("Use default model")
-                                   )
-                                   ))
+#' @importFrom shiny shinyUI
+#' @importFrom shiny tabPanel
+#' @importFrom shiny sidebarLayout
+#' @importFrom shiny sidebarPanel
+#' @importFrom shiny selectInput
+#' @importFrom shiny uiOutput
+#' @importFrom shiny fileInput
+#' @importFrom shiny radioButtons
+#' @importFrom shiny mainPanel
+#' @importFrom shiny downloadButton
+#' @importFrom shiny sliderInput
+#' @importFrom shiny plotOutput
+#' @importFrom shiny renderUI
+#' @importFrom shiny observeEvent
+#' @importFrom shiny reactiveValues
+#' @importFrom shiny tags
+#' @importFrom shiny renderPlot
+#' @importFrom shiny downloadHandler
+#' @importFrom shiny shinyApp
+#' @importFrom shiny updateRadioButtons
+#' @importFrom shiny stopApp
+#' @importFrom shiny textInput
+#' @importFrom shiny navbarPage
+#' @importFrom biomaRt listDatasets
+#' @importFrom biomaRt useMart
+#' @importFrom biomaRt listAttributes
+#' @importFrom biomaRt listFilters
+#' @importFrom DT renderDataTable
+#' @importFrom DT dataTableOutput
+#' @importFrom DT datatable
+#' @importFrom grDevices dev.off
+#' @importFrom grDevices png
+#' @importFrom graphics legend
+#' @importFrom graphics matplot
+#' @importFrom graphics par
+#' @importFrom utils write.csv
+#' @importFrom utils write.table
+#' @examples
+#' if(interactive()) {LONGO()}
+#' @export
+#'
+megaR <- function(){
+options(warn=-1)
+options(shiny.maxRequestSize=30*1024^2)
+ui <-shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
+               shiny::navbarPage("MegaR",id= "inTabsetm",
+                          shiny::tabPanel("Data Input",
+                                          shiny::fluidRow(shiny::sidebarLayout(
+                              shiny::sidebarPanel(fileInput(
+                                  inputId = "file1otutable",
+                                                     label = "COUNT TABLE",
+                                                     multiple = FALSE)
+                              ),
+                              shiny::mainPanel(type = "tab",tabsetPanel(
+                                  shiny::  tabPanel("Data",
+                                                shiny::tableOutput("mdataTbl"))
+                                  #tabPanel("G_Heatmap",
+                                  #plotOutput("mgenus")),
+                                  #tabPanel("S_Heatmap",
+                                  #plotOutput("mspecies"))
+                              ))
+                          ))
+                          ),
+                          shiny::tabPanel("Preprocessing",
+                                          shiny::fluidRow(
+                                              shiny::sidebarLayout(
+                                                  shiny::sidebarPanel(
+                                              shiny:: radioButtons("level",
+                                               "Criteria for feature selection",
+                                                choices = c("Genus Level",
+                                                            "Species Level",
+                                                                "All Level"),
+                                               selected = "Genus"),
+                                              shiny:: numericInput(
+                                                "threshold", "THRESHOLD",min= 0,
+                                                    max = 100,  step = 0.001,
+                                                value = 0.003),
+                                              shiny::sliderInput(
+"samplePercent", "Percentage of Sample", min = 0 , max = 100,step = 1, value=5),
+                                              shiny:: helpText(
+"OTU that have less than the threshold value in given percentage of sample are
+removed."),
+shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
+                     selected = "")),
+shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",shiny::tableOutput(
+    "mGoodTbl"))))))),
+shiny::navbarMenu("Model building",
+                  shiny::tabPanel("GLM",
+                                  shiny::sidebarLayout(shiny::sidebarPanel(
+                                      shiny::fileInput(
+                                          inputId = "gmyresponseVector",
+                    label ="Please input the class vector",multiple = FALSE),
+            shiny::numericInput("gclassid",label ="column number for classid",
+            min = 1, max = 100, value =8),
+            shiny::numericInput("gsampleid",label= "column number for sampleid",
+                    min = 1, max = 100, value =53),
+            shiny::numericInput("gpsd","percentage of data in training",
+                    min = 60, max = 100, value = 90),
+            shiny::textInput("gruleout",label = "Text input", value = "EST")
+                                       ),
+            shiny:: mainPanel(shiny::tabsetPanel(shiny:: tabPanel("Train Error",
+                                verbatimTextOutput("gAOC")),
+            shiny::tabPanel("Test Error",uiOutput("gmyconfusionMatrix"),
+            shiny:: actionButton("gaplot2", "Plot test error"),
+            shiny:: uiOutput("gdownload2") ,
+            shiny:: actionButton("gastats2", "Stats of the test error")))))),
+            shiny:: tabPanel("Random Forest", shiny::sidebarLayout(
+                shiny::sidebarPanel(shiny::fileInput(
+            inputId = "myresponseVector",label="Please input the class vector",
+            multiple = FALSE),
+            shiny::numericInput("classid",label ="column number for class info",
+                                           min = 1, max = 100, value =8),
+          shiny:: numericInput("sampleid", label = "column number for sampleid",
+                                           min = 1, max = 100, value =53),
+          shiny::numericInput("psd", "percentage of data in training",
+                                          min = 60, max = 100, value = 90),
+          shiny::textInput("ruleout", label = "Remove class", value = "EST")
+                          ),
+          shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Train Error",
+                                            shiny::uiOutput("AOC"),
+                                            shiny::actionButton("aplot1",
+                                        "Plot train error"),shiny::uiOutput(
+"download1"),
+
+shiny::actionButton("astats1", "Stats of the train error")),
+shiny:: tabPanel("Test Error", shiny::uiOutput("myconfusionMatrix"),
+shiny::uiOutput("download2"), shiny::actionButton("aplot2", "Plot test error"),
+shiny::actionButton("astats2", "Stats of the test error")),
+shiny:: tabPanel("Important feature", shiny::imageOutput("imptFeature"),
+shiny:: uiOutput("download3")))))
+                          ),
+shiny:: tabPanel("SVM",shiny::sidebarLayout(shiny::sidebarPanel(
+shiny::fileInput(inputId = "smyresponseVector",
+                    label = "Please input the class vector", multiple = FALSE),
+shiny::numericInput("sclassid", label = "column number for classid",
+                                           min = 1, max = 100, value =8),
+shiny::numericInput("ssampleid", label = "column number for sampleid",
+                                           min = 1, max = 100, value =53),
+shiny::numericInput("spsd", "percentage of data in training",
+                                           min = 60, max = 100, value = 90),
+shiny:: textInput("sruleout", label = "Text input", value = "EST"),
+shiny::textInput("svmtd", label = "SVM Method", value = "svmLinear")
+                          ),
+shiny::mainPanel(tabsetPanel(tabPanel("Train Error",verbatimTextOutput("sAOC")
+                          ),
+shiny::tabPanel("Test Error", uiOutput("smyconfusionMatrix"),
+       shiny::actionButton("saplot2", "Plot test error"),
+       shiny::uiOutput("sdownload2") ,
+       shiny::actionButton("sastats2", "Stats of the test error"))
+                          ))))
+
+               ),
+    shiny::tabPanel("Validate",
+    shiny:: sidebarLayout(sidebarPanel(
+    shiny::radioButtons("choicemdl", label = "Choose model",
+                               choices = c(RandomForest = "rfmodel" ,
+                                       SVM = "svmmodel", GLM = "glmmodel"),
+                                         selected = ""),
+   shiny:: numericInput("ntimes", "number of validation set",min= 1, max = 10,
+                                         step = 1, value = 3)),
+    shiny:: mainPanel(tabsetPanel(tabPanel("Accuracy",
+                                  verbatimTextOutput("Acc")))
+                            ))
+               ),
+               shiny:: navbarMenu("Prediction",shiny::tabPanel(
+                   "Use most recent model",
+                            shiny::sidebarLayout(sidebarPanel(
+                             shiny:: fileInput(inputId = "unknw",
+               label= "Please input your unknown dataset",
+                              multiple= FALSE)),
+            shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
+                                            shiny::tableOutput("Preresult"))
+                                                    )))),
+      shiny:: tabPanel("Use default model")
+               )
+               ))
 
 
 server <- function(input, output, session){
-  ############## function to generate specific taxon level data ######################
-  myLevelData <- reactive({
-    return(getLevelData(readmydata(input$file1otutable$datapath), input$level))
-  })
-  
-  myGoodfeature <- reactive({
-    return(getGoodfeature(myLevelData(), input$threshold, input$samplePercent, input$norm))
-  })
-  
-  myrfmodel <- reactive({
-    a<-gettrainingdonerf(myGoodfeature(), input$classid, input$sampleid, input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))
-    return(a)
-  })
-  smyrfmodel <- reactive({
-    a<-gettrainingdonesvm(myGoodfeature(), input$sclassid, input$ssampleid, input$sruleout, input$spsd,readmetadata(input$smyresponseVector$datapath), input$svmtd)
-    return(a)
-  })
-  
-  gmyrfmodel <- reactive({
-    a<-gettrainingdoneglm(myGoodfeature(), input$gclassid, input$gsampleid, input$gruleout, input$gpsd,readmetadata(input$gmyresponseVector$datapath), input$gvmtd)
-    return(a)
-  })
-  
-  output$mdataTbl <- renderTable({
-    req(input$file1otutable$datapath)
-    return(readmydata(input$file1otutable$datapath))
-  }, rownames = TRUE)
-  
-  output$mGoodTbl <- renderTable({
-    req(input$norm)
-    myGoodfeature()
-  }, rownames =  T)
- 
-  v1 <- reactiveValues(data = NULL)
-  v2 <- reactiveValues(data = NULL)
-
-  output$AOC <- renderUI({
-    req(v1$data)
-    if(v1$data == 1){
-      plotOutput("plottrainerror")
-    }else{
-      verbatimTextOutput("Statstrain")
-    }
-  })
-  
-  observeEvent(input$aplot1,{ v1$data <- 1  })
-  observeEvent(input$astats1,{v1$data <- 2  })
-  
-  output$plottrainerror <- renderPlot({
-    req(input$myresponseVector$datapath)
-    plot(myrfmodel()[[3]], main= "Train Error during training model")
-  })
-  
-  output$Statstrain <- renderPrint({
-    req(input$myresponseVector$datapath)
-    myrfmodel()[[3]]
-  })
-  
-  output$myconfusionMatrix <- renderUI({
-    req(v2$data)
-    if(v2$data == 1){
-      plotOutput("plotconfumat")
-      } else{
-      verbatimTextOutput("Statsconfu")
-      }
+    ############## function to generate specific taxon level data #############
+    myreaddata <<- shiny::reactive({
+        return(readmydata(input$file1otutable$datapath))
     })
-  
-  observeEvent(input$aplot2,{ v2$data <- 1  })
-  observeEvent(input$astats2,{v2$data <- 2  })
-  
-    output$plotconfumat <- renderPlot({
-    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
-  })
- 
-  output$Statsconfu <- renderPrint({
-    req(myrfmodel())
-    getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
-  })
-  
-  output$imptFeature <- renderPlot({
-    req(myrfmodel())
-    plotimportantfeatures(myrfmodel()[[3]], 10)
-  })
-  
-  output$Acc <- renderPrint({
-    req(input$choicemdl)
-    if(input$choicemdl == "rfmodel"){
-    validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$myresponseVector$datapath))}
-    
-    else if (input$choicemdl == "svmmodel"){
-      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$smyresponseVector$datapath) ,input$svmtd)}
-  
-    else{
-      validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid, input$sampleid,input$ruleout, input$psd,readmetadata(input$gmyresponseVector$datapath))}
-    
-  })
-  
-  output$Preresult <- renderTable({
-    req(input$unknw$datapath)
-    a <- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
-                                    input$level),input$threshold, input$samplePercent, input$norm)
-    if(input$choicemdl == "rfmodel"){
-    getunknpredict(a,myrfmodel())}
-    if(input$choicemdl == "srfmodel"){
-      getunknpredict(a,smyrfmodel())}
-    if(input$choicemdl == "grfmodel"){
-      getunknpredict(a,gmyrfmodel())
-      }
-  }, rownames= TRUE)
-  
-  ####################################################################################################
-  ##### metaphlan svm #############
-  
-  sv1 <- reactiveValues(data = NULL)
-  sv2 <- reactiveValues(data = NULL)
-  observeEvent(input$saplot2,{ sv2$data <- 1  })
-  observeEvent(input$sastats2,{ sv2$data <- 2 })
-  
-  output$sAOC <- renderPrint({
-    req(input$smyresponseVector$datapath)
-    smyrfmodel()[[3]]
-  })
- output$smyconfusionMatrix <- renderUI({
-    req(sv2$data)
-    if(sv2$data == 1){
-      plotOutput("splotconfumat")
-    } else{
-      verbatimTextOutput("sStatsconfu")
-    }
-  })
-  output$splotconfumat <- renderPlot({
-   getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]])[1]
-  })
-  output$sStatsconfu <- renderPrint({
-    req(smyrfmodel())
-    getconfuMat(smyrfmodel()[[2]],smyrfmodel()[[3]])[2]
-  })
-  
-  ##########################################################################################################################################################
-  ### metaphlan glm
-  
-  output$gAOC <- renderPrint({
-    req(input$gmyresponseVector$datapath)
-    gmyrfmodel()[[3]] #, smyrfmodel()[[1]])
-  })
-  
-  gv1 <- reactiveValues(data = NULL)
-  gv2 <- reactiveValues(data = NULL)
-  
- 
-  observeEvent(input$gaplot1,{ gv1$data <- 1})
-  observeEvent(input$gastats1,{gv1$data <- 2})
-  
- 
-  output$gmyconfusionMatrix <- renderUI({
-    req(gv2$data)
-    if(gv2$data == 1){
-      plotOutput("gplotconfumat")
-    }else{
-      verbatimTextOutput("gStatsconfu")
-    }
-  })
-  
-  observeEvent(input$gaplot2,{ gv2$data <- 1  })
-  observeEvent(input$gastats2,{ gv2$data <- 2})
-  
-  output$gplotconfumat <- renderPlot({
-    getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]])[gv2$data]
-  })
-  
-  output$gStatsconfu <- renderPrint({
-    req(gmyrfmodel())
-    getconfuMat(gmyrfmodel()[[2]],gmyrfmodel()[[3]])[gv2$data]
-  })
-  output$download1 <- renderUI({
-    req(v1$data)
-    if(v1$data == 1) {
-      downloadButton('down', 'Download Output File')
-    }
-  })
-  output$download2 <- renderUI({
-    req(v2$data)
-    if(v2$data == 1){
-      downloadButton('confudown', 'Download Output File')
-    }
-  })
-  output$sdownload2 <- renderUI({
-    req(sv2$data)
-    if(sv2$data == 1){
-      downloadButton('sconfudown', 'Download Output File')
-    }
-  })
-  output$gdownload2 <- renderUI({
-    req(gv2$data)
-    if(gv2$data == 1){
-      downloadButton('gconfudown', 'Download Output File')
-    }
-  })
-  output$download3 <- renderUI({
-    if(!is.null(myrfmodel())) {
-      downloadButton('imptfeat', 'Download Output File')
-    }
-  })
-  
-  output$down <- downloadHandler(
-    filename = "iris.pdf",
-    content = function(file){
-      pdf(file) # open the pdf device
-      print(plot(myrfmodel()[[3]])) 
-      dev.off()
-    }
-  )
-  output$confudown <- downloadHandler(
-    filename = "iris.pdf",
-    content = function(file) {
-      pdf(file) # open the pdf device
-      print( getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]]))
-      dev.off()
-    }
-  )
-  output$sconfudown <- downloadHandler(
-    filename = "iris.pdf",
-    content = function(file) {
-      pdf(file) # open the pdf device
-      print( getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]]))
-      dev.off()
-    }
-  )
-  output$gconfudown <- downloadHandler(
-    filename = "iris.pdf",
-    content = function(file) {
-      pdf(file) # open the pdf device
-      print( getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]]))
-      dev.off()
-    }
-  )
-  output$imptfeat <- downloadHandler(
-    filename = "iris.pdf",
-    content = function(file) {
-      pdf(file) # open the pdf device
-      print(plotimportantfeatures(myrfmodel()[[3]], 10))
-      dev.off()
-    }
-  )
+
+    myLevelData <- shiny::reactive({
+        return(getLevelData(myreaddata(), input$level))
+    })
+
+    myGoodfeature <- shiny::reactive({
+        return(getGoodfeature(myLevelData(),input$threshold,input$samplePercent,
+                              input$norm))
+    })
+
+    myrfmodel <- shiny::reactive({
+        a<-gettrainingdonerf(myGoodfeature(), input$classid, input$sampleid,
+                             input$ruleout, input$psd,
+                             readmetadata(input$myresponseVector$datapath))
+        return(a)
+    })
+    smyrfmodel <-shiny:: reactive({
+        a <- gettrainingdonesvm(myGoodfeature(), input$sclassid,input$ssampleid,
+                              input$sruleout, input$spsd,readmetadata(
+                                  input$smyresponseVector$datapath),input$svmtd)
+        return(a)
+    })
+
+    gmyrfmodel <-shiny:: reactive({
+        a<-gettrainingdoneglm(myGoodfeature(), input$gclassid,
+                              input$gsampleid, input$gruleout, input$gpsd,
+                              readmetadata(input$gmyresponseVector$datapath))
+        return(a)
+    })
+
+    output$mdataTbl <- shiny::renderTable({
+        req(input$file1otutable$datapath)
+        return(myreaddata())
+    }, rownames = TRUE)
+
+    output$mGoodTbl <-shiny:: renderTable({
+        req(input$norm)
+        myGoodfeature()
+    }, rownames =  T)
+
+    v1 <- shiny::reactiveValues(data = NULL)
+    v2 <- shiny::reactiveValues(data = NULL)
+
+    output$AOC <- shiny::renderUI({
+        req(v1$data)
+        if(v1$data == 1){
+            shiny:: plotOutput("plottrainerror")
+        }else{
+            shiny::verbatimTextOutput("Statstrain")
+        }
+    })
+
+    shiny:: observeEvent(input$aplot1,{ v1$data <- 1  })
+    shiny::observeEvent(input$astats1,{v1$data <- 2  })
+
+    output$plottrainerror <- shiny::renderPlot({
+        req(input$myresponseVector$datapath)
+        plot(myrfmodel()[[3]], main= "Train Error during training model")
+    })
+
+    output$Statstrain <- shiny::renderPrint({
+        req(input$myresponseVector$datapath)
+        myrfmodel()[[3]]
+    })
+
+    output$myconfusionMatrix <- shiny::renderUI({
+        req(v2$data)
+        if(v2$data == 1){
+            plotOutput("plotconfumat")
+        } else{
+            verbatimTextOutput("Statsconfu")
+        }
+    })
+
+    shiny::observeEvent(input$aplot2,{ v2$data <- 1  })
+    shiny::observeEvent(input$astats2,{v2$data <- 2  })
+
+    output$plotconfumat <- shiny::renderPlot({
+        getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
+    })
+
+    output$Statsconfu <- shiny::renderPrint({
+        req(myrfmodel())
+        getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
+    })
+
+    output$imptFeature <-shiny:: renderPlot({
+        req(myrfmodel())
+        plotimportantfeatures(myrfmodel()[[3]], 10)
+    })
+
+    output$Acc <-shiny:: renderPrint({
+        req(input$choicemdl)
+        if(input$choicemdl == "rfmodel"){
+        validation(input$ntimes, input$choicemdl,myGoodfeature(),input$classid,
+                       input$sampleid,input$ruleout, input$psd,
+                       readmetadata(input$myresponseVector$datapath))}
+
+        else if (input$choicemdl == "svmmodel"){
+        validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid,
+                       input$sampleid,input$ruleout, input$psd,
+                       readmetadata(input$smyresponseVector$datapath))}
+
+        else{
+        validation(input$ntimes, input$choicemdl,myGoodfeature(), input$classid,
+                       input$sampleid,input$ruleout, input$psd,
+                       readmetadata(input$gmyresponseVector$datapath))}
+
+    })
+
+    output$Preresult <- shiny::renderTable({
+        req(input$unknw$datapath)
+        a <- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
+                                         input$level),input$threshold,
+                            input$samplePercent, input$norm)
+        if(input$choicemdl == "rfmodel"){
+            getunknpredict(a,myrfmodel())}
+        if(input$choicemdl == "srfmodel"){
+            getunknpredict(a,smyrfmodel())}
+        if(input$choicemdl == "grfmodel"){
+            getunknpredict(a,gmyrfmodel())
+        }
+    }, rownames= TRUE)
+
+    #######################################################################
+    ##### metaphlan svm #############
+
+    sv1 <- shiny::reactiveValues(data = NULL)
+    sv2 <- shiny::reactiveValues(data = NULL)
+    shiny::observeEvent(input$saplot2,{ sv2$data <- 1  })
+    shiny::observeEvent(input$sastats2,{ sv2$data <- 2 })
+
+    output$sAOC <-shiny:: renderPrint({
+        req(input$smyresponseVector$datapath)
+        smyrfmodel()[[3]]
+    })
+    output$smyconfusionMatrix <-shiny:: renderUI({
+        req(sv2$data)
+        if(sv2$data == 1){
+            plotOutput("splotconfumat")
+        } else{
+            verbatimTextOutput("sStatsconfu")
+        }
+    })
+    output$splotconfumat <- shiny::renderPlot({
+        getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]])[1]
+    })
+    output$sStatsconfu <- renderPrint({
+        req(smyrfmodel())
+        getconfuMat(smyrfmodel()[[2]],smyrfmodel()[[3]])[2]
+    })
+
+    ########################################################################
+
+    output$gAOC <- shiny::renderPrint({
+        req(input$gmyresponseVector$datapath)
+        gmyrfmodel()[[3]] #, smyrfmodel()[[1]])
+    })
+
+    gv1 <- shiny::reactiveValues(data = NULL)
+    gv2 <- shiny::reactiveValues(data = NULL)
+
+
+    shiny::observeEvent(input$gaplot1,{ gv1$data <- 1})
+    shiny::observeEvent(input$gastats1,{gv1$data <- 2})
+
+
+    output$gmyconfusionMatrix <- shiny::renderUI({
+        req(gv2$data)
+        if(gv2$data == 1){
+            plotOutput("gplotconfumat")
+        }else{
+            verbatimTextOutput("gStatsconfu")
+        }
+    })
+
+    shiny::observeEvent(input$gaplot2,{ gv2$data <- 1  })
+    shiny::observeEvent(input$gastats2,{ gv2$data <- 2})
+
+    output$gplotconfumat <- shiny::renderPlot({
+        getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]])[gv2$data]
+    })
+
+    output$gStatsconfu <- shiny::renderPrint({
+        req(gmyrfmodel())
+        getconfuMat(gmyrfmodel()[[2]],gmyrfmodel()[[3]])[gv2$data]
+    })
+    output$download1 <- shiny::renderUI({
+        req(v1$data)
+        if(v1$data == 1) {
+            downloadButton('down', 'Download Output File')
+        }
+    })
+    output$download2 <- shiny::renderUI({
+        req(v2$data)
+        if(v2$data == 1){
+            downloadButton('confudown', 'Download Output File')
+        }
+    })
+    output$sdownload2 <- shiny::renderUI({
+        req(sv2$data)
+        if(sv2$data == 1){
+            downloadButton('sconfudown', 'Download Output File')
+        }
+    })
+    output$gdownload2 <- shiny::renderUI({
+        req(gv2$data)
+        if(gv2$data == 1){
+            downloadButton('gconfudown', 'Download Output File')
+        }
+    })
+    output$download3 <- shiny::renderUI({
+        if(!is.null(myrfmodel())) {
+            downloadButton('imptfeat', 'Download Output File')
+        }
+    })
+
+    output$down <- shiny::downloadHandler(
+        filename = "iris.pdf",
+        content = function(file){
+            pdf(file) # open the pdf device
+            print(plot(myrfmodel()[[3]]))
+            dev.off()
+        }
+    )
+    output$confudown <- shiny::downloadHandler(
+        filename = "iris.pdf",
+        content = function(file) {
+            pdf(file) # open the pdf device
+            print( getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]]))
+            dev.off()
+        }
+    )
+    output$sconfudown <- shiny::downloadHandler(
+        filename = "iris.pdf",
+        content = function(file) {
+            pdf(file) # open the pdf device
+            print( getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]]))
+            dev.off()
+        }
+    )
+    output$gconfudown <- shiny::downloadHandler(
+        filename = "iris.pdf",
+        content = function(file) {
+            pdf(file) # open the pdf device
+            print( getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]]))
+            dev.off()
+        }
+    )
+    output$imptfeat <- shiny::downloadHandler(
+        filename = "iris.pdf",
+        content = function(file) {
+            pdf(file) # open the pdf device
+            print(plotimportantfeatures(myrfmodel()[[3]], 10))
+            dev.off()
+        }
+    )
 }
 
 shinyApp(ui, server)
+}
