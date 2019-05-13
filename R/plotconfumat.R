@@ -7,9 +7,8 @@
 
 #' @import ggplot2
 #' @import RColorBrewer
+#' @export
 
-library(ggplot2)
-library(RColorBrewer)
 getconfuMat <- function(testdata, rfmodel){
   tpre <- predict(rfmodel, testdata[,-ncol(testdata)])
   #tpre
