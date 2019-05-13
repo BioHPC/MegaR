@@ -6,6 +6,7 @@
 #' @param threshold threshold of the value of feature that should be across the sample
 #' @param samplePercent percentage of sample that should contain the threshold amount of value in its feature
 #' @param normval wheather to normalize using cumulative sum normalization or not
+#' @export
 
 getGoodfeature <- function(alltable2, threshold, samplePercent, normval){ # pass leveled data here
   row2keep <- c()
