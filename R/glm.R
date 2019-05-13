@@ -1,3 +1,13 @@
+#' @param mytable3 processed input file with features
+#' @param classid the column number in metadata file in which the class of 
+#' input data is stored
+#' @param ruleout the class which is to be removed from classification model
+#' @param sampleid the column number of metadata file which contain sample ids
+#'  that match with input data
+#'  @param psd the percentage of data to be split into training set
+#'  @param metadat the metadata path
+#'
+#'  @export
 gettrainingdoneglm <- function(mytable3, classid, sampleid, ruleout, psd, metadat){
   otu_table_scaled <- mytable3
   otu_table_scaled_state <- data.frame(t(otu_table_scaled))  
