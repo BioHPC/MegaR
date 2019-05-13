@@ -1,7 +1,10 @@
 #' megaR analysis
+#'This function plots the top 10 important features for random forest
+#'classification.
 #'
 #' @param RF_state_classify the random forest classifier
-#' @param noOfFeature number of important feature to display in  barplot 
+#' @param noOfFeature number of important feature to display in  barplot
+#' @export
 plotimportantfeatures <- function(RF_state_classify, noOffeature){
 fc<- colorRampPalette(rev(brewer.pal(n = 9, "Blues")))
 RF_state_classify_imp <- as.data.frame( RF_state_classify$importance )
