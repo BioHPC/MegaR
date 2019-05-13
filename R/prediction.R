@@ -4,6 +4,8 @@
 #'
 #' @param unknormdata unknown dataset
 #' @param a model list with elements ******
+#' @export
+
 getunknpredict <- function(unknormdata, a){
    rownames(unknormdata)<- gsub("|", ".", rownames(unknormdata), fixed = TRUE)
   new_leveled_ukn.s1 <- unknormdata[match(colnames(a[[1]]) , rownames(unknormdata)),  ] 
