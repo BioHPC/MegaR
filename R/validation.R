@@ -1,39 +1,67 @@
+#' megaR validation
+#'
+#' This function conducts 10 fold cross validation on N set of data
+#' @param Num No. of sets to run for validation
+#' @param modelclas one of the model, randomforest, supportvector machine or
+#' generalized linear model
+#' @param mytable3 processed input file with features
+#' @param classid the column number in metadata file in which the class of
+#' input data is stored
+#' @param ruleout the class which is to be removed from classification model
+#' @param sampleid the column number of metadata file which contain sample ids
+#'  that match with input data
+#' @param psd the percentage of data to be split into training set
+#' @param metadat the metadata path
+#'
+#' @export
 
+validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
+                     metadat){
+    otu_table_scaled <- mytable3
+    otu_table_scaled_state <- data.frame(t(otu_table_scaled))
+    otu_table_scaled_state$country <- metadat[,classid][match(
+        rownames (otu_table_scaled_state),
+        metadat[,sampleid])]
+    otu_table_scaled_state <- stats::na.omit(otu_table_scaled_state)
+    otu_table_scaled_state <- otu_table_scaled_state[
+        otu_table_scaled_state$country != ruleout,]
+    otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
+    fit_control <- caret::trainControl(method = "LOOCV")
 
-validation <- function(N,  modelclas ,mytable3, classid, sampleid, ruleout, psd, metadat ){  
-  otu_table_scaled <- mytable3
-  otu_table_scaled_state <- data.frame(t(otu_table_scaled))  
-  #otu_table_scaled_state$country <- mymetadata()[,input$classid][match(str_remove(rownames(otu_table_scaled_state), "_profile"), mymetadata()[,input$sampleid])]  
-  otu_table_scaled_state$country <- metadat[,classid][match(rownames(otu_table_scaled_state), metadat[,sampleid])]
-  otu_table_scaled_state <- na.omit(otu_table_scaled_state)
-  otu_table_scaled_state <- otu_table_scaled_state[otu_table_scaled_state$country != ruleout,]
-  otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
-  fit_control <- caret::trainControl(method = "LOOCV")
-  
-  Acc3<- NULL
-  Kpp3 <- NULL
-  for (i in 1:N) {
-    smp_size <- floor((psd/100) * nrow(otu_table_scaled_state1))
-    train_ind <- sample(seq_len(nrow(otu_table_scaled_state1)), size = smp_size)
-    train <- otu_table_scaled_state1[train_ind, ]
-    train<-droplevels(train)
-    test <- otu_table_scaled_state1[-train_ind,]
-    if(modelclas == "rfmodel"){
-      RF_state_classify <- randomForest::randomForest(as.factor(country)~. , data =train, importance = T, proximities = T)
-      RF_state_classify_loocv <- train(as.factor(country)~. , data =train , method="rf",ntree= 501,  tuneGrid=data.frame( mtry=RF_state_classify$mtry ), trControl=fit_control)
-      Acc3[i] <- RF_state_classify_loocv$results$Accuracy
-      Kpp3[i] <- RF_state_classify_loocv$results$Kappa
+    Acc3<- NULL
+    Kpp3 <- NULL
+    for (i in 1:Num) {
+        smp_size <- floor((psd/100) * nrow(otu_table_scaled_state1))
+        train_ind <- sample(seq_len(nrow(otu_table_scaled_state1)),
+                            size = smp_size)
+        train <- otu_table_scaled_state1[train_ind, ]
+        train<-droplevels(train)
+        test <- otu_table_scaled_state1[-train_ind,]
+        if(modelclas == "rfmodel"){
+            RF_state_classify <- randomForest::randomForest(
+                as.factor(country)~. ,data =train,importance = T,proximities=T)
+            RF_state_classify_loocv <- caret::train(
+                as.factor(country)~. , data =train,method="rf",ntree= 501,
+                tuneGrid=data.frame( mtry=RF_state_classify$mtry ),
+                trControl=fit_control)
+            Acc3[i] <- RF_state_classify_loocv$results$Accuracy
+            Kpp3[i] <- RF_state_classify_loocv$results$Kappa
+        }
+        else if(modelclas == "svmmodel"){
+            RF_state_classify_loocv <- caret::train(as.factor(country)~. ,
+                                             data =train , method="svmLinear",
+                                             trControl=fit_control)
+            Acc3[i] <- RF_state_classify_loocv$results$Accuracy
+            Kpp3[i] <- RF_state_classify_loocv$results$Kappa
+        }
+        else {
+            RF_state_classify_loocv <- caret::train(as.factor(country)~. ,
+                                             data =train , method="glm"  ,
+                                             trControl=fit_control)
+            Acc3[i] <- RF_state_classify_loocv$results$Accuracy
+            Kpp3[i] <- RF_state_classify_loocv$results$Kappa
+        }
     }
-    else if(modelclas == "svmmodel"){
-      RF_state_classify_loocv <- train(as.factor(country)~. , data =train , method="svmLinear", trControl=fit_control)
-      Acc3[i] <- RF_state_classify_loocv$results$Accuracy
-      Kpp3[i] <- RF_state_classify_loocv$results$Kappa
-    }
-    else {
-      RF_state_classify_loocv <- train(as.factor(country)~. , data =train , method="glm"  , trControl=fit_control)
-      Acc3[i] <- RF_state_classify_loocv$results$Accuracy
-      Kpp3[i] <- RF_state_classify_loocv$results$Kappa
-    }
-  }
-  sprintf("The 10 fold cross validated obtained from the average of %i independent run is  %f. ", N , sum(Acc3)/N )
+    sprintf("The 10 fold cross validated obtained from the average of %i
+            independent run is  %f. ", Num , sum(Acc3)/Num )
 }

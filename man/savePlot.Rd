@@ -2,8 +2,7 @@
 % Please edit documentation in R/savePlot.R
 \name{savePlot}
 \alias{savePlot}
-\title{This is a internal function. This function allows the program to
-save the plot generated in the program.}
+\title{megaR savePlot}
 \usage{
 savePlot(file, plotIn)
 }

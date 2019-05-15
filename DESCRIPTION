@@ -1,15 +1,20 @@
 Package: megaR
+Type: Package
 Title: An interactive R package for Metagenomic Data Analysis for Disease
     Prediction
 Version: 0.1.0
-Author: Eliza Dhungel
-Maintainer: eliza.dhungel@slu.edu	
-Description: megaR takes Metaphlan or QIIME input and preprocess the data
-    according to user descripted critea feature(genus or species) and threshold 
-    value. User can select from among the three models to build the predictive 
-    models and check the training and testing accuracy of the model. Built models
-    can also be validated and used for predicting unknown samples.
-License: 
+Depends: R (>= 3.4)
+Authors@R: c(person("Eliza", "Dhungel", role = c("aut", "cre"),
+                                  email = "eliza.dhungel@slu.edu"),
+                           person("Ted", "Ahn", 
+                           email="ted.ahn@slu.edu" ,role = "aut")
+                           )
+Maintainer: Eliza Dhungel <eliza.dungel@slu.edu>
+Description: megaR helps in building predictive models to classify metagenomic
+    samples.
+    models and check the training and testing accuracy of the model and Built 
+    models can also be validated and used for predicting unknown samples.
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -22,5 +27,8 @@ Imports:
     ggplot2,
     RColorBrewer,
     biomformat,
-    caret
+    caret,
+    DT,
+    graphics,
+    biomaRt
 RoxygenNote: 6.1.1

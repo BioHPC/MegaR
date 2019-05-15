@@ -10,19 +10,21 @@ gettrainingdonesvm(mytable3, classid, sampleid, ruleout, psd, metadat,
 \arguments{
 \item{mytable3}{processed input file with features}
 
-\item{classid}{the column number in metadata file in which the class of 
+\item{classid}{the column number in metadata file in which the class of
 input data is stored}
 
 \item{sampleid}{the column number of metadata file which contain sample ids
-that match with input data
-@param psd the percentage of data to be split into training set
-@param metadat the metadata path
-@param svmmethod one of the many svm method available in caret
-@export}
+that match with input data}
 
 \item{ruleout}{the class which is to be removed from classification model}
+
+\item{psd}{the percentage of data to be split into training set}
+
+\item{metadat}{the metadata path}
+
+\item{svmmethod}{one of the many svm method available in caret}
 }
 \description{
-This is the function to get class information for the input data from the 
+This is the function to get class information for the input data from the
 metadata file and build the support vector machines as predictive models.
 }

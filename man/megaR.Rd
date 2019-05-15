@@ -2,7 +2,8 @@
 % Please edit documentation in R/megaRshiny.R
 \name{megaR}
 \alias{megaR}
-\title{Use megaR through shiny interface}
+\title{megaR megaRshiny
+Use megaR through shiny interface}
 \usage{
 megaR()
 }
