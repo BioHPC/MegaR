@@ -13,22 +13,27 @@ An user-friendly interactive machine learning interface for metagenomic analysis
     * Linux: https://cran.r-project.org/bin/linux/
 
 * Libraries
-    * shiny; shinythemes; shinydashboard; randomForest; stringr; caret
-    * plyr; ggplot2; RColorBrewer; biomformat
+    * shiny; shinythemes; randomForest; stringr; caret
+    * plyr; ggplot2; RColorBrewer; biomformat; biomaRt
     
-* Installation
-   * megaR is developed as a freely available R shiny interface which can be run on R Studio. The application package can be downloaded from the megaR github page by clicking clone or download button. The downloaded file contains a number of files including  megaRshiny.R in the R folder. 
+* Installing megaR package:
+   * To install the megaR package all the prerequisites above need to be installed and megaR repositary should be downloded. After confirming those packages are installed start RStudio. From there follow the instructions below:
 
-* Running
-   * This file can be loaded in the R Studio and can be launched by clicking the tiny green button. Please make sure that all the dependent pacakges are preinstalled. Packages can be installed using command install.packages("packagenames")
-----
-
+* Tools dropdown -> Install Packages…
+* Change the Install from dropdown to Package Archive File
+* Locate the megaR-master folder (megaR-master)
+* Click install
+Another option is to use the follow R line:
+* install.packages(“~/megaR-master”, repos = NULL, type = “source”)
+   
+* Introduction
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
 MegaR provides an unprecedented opportunity to develop  machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
 
 The description below walk you through the analysis of the WGS of three country cohort where samples are categorized based on their country of origin using machine leanring techniques. The general workflow is described in below.
 
+* Usage with megaR():
 
 **Data Input**
 
