@@ -17,7 +17,7 @@ An user-friendly interactive machine learning interface for metagenomic analysis
     * plyr; ggplot2; RColorBrewer; biomformat; biomaRt
     
 * Installing megaR package:
-   * To install the megaR package all the prerequisites above need to be installed and megaR repositary should be downloded. After confirming those packages are installed start RStudio. From there follow the instructions below:
+   * To install the megaR package all the prerequisites above need to be installed and megaR repository should be downloded. Start RStudio and follow the instructions below from there to install the package.(You may additionally download data from Data folder.)
 
 * Tools dropdown -> Install Packages…
 * Change the Install from dropdown to Package Archive File
