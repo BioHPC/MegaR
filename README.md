@@ -33,7 +33,7 @@ MegaR provides an unprecedented opportunity to develop  machine learning models 
 
 The description below walk you through the analysis of the WGS of three country cohort where samples are categorized based on their country of origin using machine leanring techniques. The general workflow is described in below.
 
-* Usage with megaR():
+**Usage with megaR():**
 
 **Data Input**
 
