@@ -18,9 +18,8 @@ An user-friendly interactive machine learning interface for metagenomic analysis
    * Tools dropdown -> Install Packages…
    * Change the Install from dropdown to Package Archive File
    * Locate the megaR-master folder (megaR-master)
-   * Click install
-   
-Another option is to use the follow R line:
+   * Click install   
+ Another option is to use the follow R line:
    * install.packages(“~/megaR-master”, repos = NULL, type = “source”)
    
 * Introduction
