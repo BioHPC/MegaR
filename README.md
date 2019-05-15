@@ -1,7 +1,3 @@
-megaR: An Interactive R Package for Metagenomic Sample Classification and Disease Prediction using Microbiota and Machine Learning
------------------------------------------------------------------------
-
-
 An user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
 ----
 **Pre-requisites:**
