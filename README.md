@@ -14,13 +14,15 @@ An user-friendly interactive machine learning interface for metagenomic analysis
     
 **Installing megaR package:**
 
-* To install the megaR package all the prerequisites above need to be installed and megaR repository should be downloded by clicking the [link](https://github.com/BioHPC/megaR/archive/master.zip) . Start RStudio and follow the instructions below from there to install the package.(You may additionally download data from Data folder.)
+* To use the megaR package, please make sure that all the prerequisites above are installed properly and  download megaR repository by clicking the [link](https://github.com/BioHPC/megaR/archive/master.zip) . Start RStudio and follow the instructions below from there to install the package.(You may additionally download data from Data folder.)
    * Tools dropdown -> Install Packages
    * Change the Install from dropdown to Package Archive File
    * Locate the megaR-master folder (megaR-master)
    * Click install
 * Another option is to use the follow R line:
    * install.packages(“~/megaR-master”, repos = NULL, type = “source”)
+   
+ Note: Please make sure that all the dependencies of required pacakges are installed properly if you ran into problem.
    
 **Introduction**
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
