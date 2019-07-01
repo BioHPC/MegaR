@@ -3,7 +3,7 @@ An user-friendly interactive machine learning interface for metagenomic analysis
 **Pre-requisites:**
 
 * R version
-    * Download R (>3.4.0) version from CRAN.
+    * Download R (>3.6.0) version from CRAN.
     * Windows: https://cran.r-project.org/bin/windows/base/
     * Mac OS X: https://cran.r-project.org/bin/macosx/
     * Linux: https://cran.r-project.org/bin/linux/
