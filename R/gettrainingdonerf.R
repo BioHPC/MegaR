@@ -9,25 +9,24 @@
 #' @param metadat the metadata path
 #'
 #'  @export
-gettrainingdonerf <- function(mytable3, classid, sampleid,ruleout,psd,metadat){
+gettrainingdonerf <- function(mytable3, classid, sampleid,ruleout,psd,metadat,mrange){
     otu_table_scaled <- mytable3
     otu_table_scaled_state <- data.frame(t(otu_table_scaled))
     otu_table_scaled_state$country <- metadat[,classid][match(
         stringr::str_remove(rownames(otu_table_scaled_state), "_.*"),
         metadat[,sampleid])]
     otu_table_scaled_state <- stats::na.omit(otu_table_scaled_state)
-    otu_table_scaled_state <- otu_table_scaled_state[
-        otu_table_scaled_state$country != ruleout,]
-    otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
-
+    otu_table_scaled_state$country <- factor(otu_table_scaled_state$country, levels = ruleout) # add this lin
+    otu_table_scaled_state1 <- stats::na.omit(droplevels(otu_table_scaled_state))
     set.seed(60)
     smp_size <- floor((psd/100) * nrow(otu_table_scaled_state1))
     train_ind <- sample(seq_len(nrow(otu_table_scaled_state1)), size = smp_size)
     train <- otu_table_scaled_state1[train_ind, ]
     train<-droplevels(train)
     test <- otu_table_scaled_state1[-train_ind,]
-    RF_state_classify <- randomForest::randomForest(as.factor(country)~. ,
-                                                    data =train, importance = T,
-                                                    proximities = T)
-    return(list(train, test, RF_state_classify))
+    tunegrid <- expand.grid(.mtry=c(mrange[[1]]:mrange[[2]]))
+    rf_gridsearch <- caret::train(as.factor(country)~., data=train, method="rf",
+                           tuneGrid=tunegrid)
+    
+    return(list(train, test, rf_gridsearch))
 }
