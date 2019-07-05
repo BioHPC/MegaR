@@ -16,16 +16,15 @@
 #' @export
 
 validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
-                     metadat){
+                     metadat, optparam){
     otu_table_scaled <- mytable3
     otu_table_scaled_state <- data.frame(t(otu_table_scaled))
     otu_table_scaled_state$country <- metadat[,classid][match(
         rownames (otu_table_scaled_state),
         metadat[,sampleid])]
     otu_table_scaled_state <- stats::na.omit(otu_table_scaled_state)
-    otu_table_scaled_state <- otu_table_scaled_state[
-        otu_table_scaled_state$country != ruleout,]
-    otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
+    otu_table_scaled_state$country <- factor(otu_table_scaled_state$country, levels = ruleout) # add this lin
+    otu_table_scaled_state1 <- stats::na.omit(droplevels( otu_table_scaled_state))
     fit_control <- caret::trainControl(method = "LOOCV")
 
     Acc3<- NULL
@@ -34,29 +33,29 @@ validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
         smp_size <- floor((psd/100) * nrow(otu_table_scaled_state1))
         train_ind <- sample(seq_len(nrow(otu_table_scaled_state1)),
                             size = smp_size)
-        train <- otu_table_scaled_state1[train_ind, ]
-        train<-droplevels(train)
+        mtrain <- otu_table_scaled_state1[train_ind, ]
+        #mtrain<-droplevels(mtrain)
         test <- otu_table_scaled_state1[-train_ind,]
         if(modelclas == "rfmodel"){
-            RF_state_classify <- randomForest::randomForest(
-                as.factor(country)~. ,data =train,importance = T,proximities=T)
+            #RF_state_classify <- randomForest::randomForest(
+             #   as.factor(country)~. ,data =train,importance = T,proximities=T)
             RF_state_classify_loocv <- caret::train(
-                as.factor(country)~. , data =train,method="rf",ntree= 501,
-                tuneGrid=data.frame( mtry=RF_state_classify$mtry ),
-                trControl=fit_control)
+                as.factor(country)~. , data = mtrain,method="rf",ntree= 501,
+                 .mtry = optparam, trControl=fit_control)
             Acc3[i] <- RF_state_classify_loocv$results$Accuracy
             Kpp3[i] <- RF_state_classify_loocv$results$Kappa
+            #optparam
         }
         else if(modelclas == "svmmodel"){
             RF_state_classify_loocv <- caret::train(as.factor(country)~. ,
-                                             data =train , method="svmLinear",
-                                             trControl=fit_control)
+                                             data =mtrain , method="svmLinear",
+                                             trControl=fit_control, .C=optparam)
             Acc3[i] <- RF_state_classify_loocv$results$Accuracy
             Kpp3[i] <- RF_state_classify_loocv$results$Kappa
         }
         else {
             RF_state_classify_loocv <- caret::train(as.factor(country)~. ,
-                                             data =train , method="glm"  ,
+                                             data =mtrain , method="glm"  ,
                                              trControl=fit_control)
             Acc3[i] <- RF_state_classify_loocv$results$Accuracy
             Kpp3[i] <- RF_state_classify_loocv$results$Kappa
