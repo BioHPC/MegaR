@@ -1,4 +1,4 @@
-An user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
+A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
 ----
 **Pre-requisites:**
 
