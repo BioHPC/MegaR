@@ -14,16 +14,16 @@
 #' @export
 
 gettrainingdonesvm <- function(mytable3, classid, sampleid, ruleout, psd,
-                               metadat,svmmethod){
+                               metadat,svmmethod, mrange){
     otu_table_scaled <- mytable3
     otu_table_scaled_state <- data.frame(t(otu_table_scaled))
     otu_table_scaled_state$country <- metadat[,classid][match(
         rownames(otu_table_scaled_state), metadat[,sampleid])]
     otu_table_scaled_state <- stats::na.omit(otu_table_scaled_state)
-    otu_table_scaled_state <- otu_table_scaled_state[
-        otu_table_scaled_state$country != ruleout,]
-    otu_table_scaled_state1 <-droplevels( otu_table_scaled_state)
-
+    otu_table_scaled_state$country <- factor(otu_table_scaled_state$country, levels = ruleout)
+    otu_table_scaled_state1 <- stats::na.omit(droplevels( otu_table_scaled_state))
+    tunegrid <- expand.grid(.C = seq(mrange[[1]],mrange[[2]], 0.01))
+    
     set.seed(60)
     smp_size <- floor((psd/100) * nrow(otu_table_scaled_state1))
     train_ind <- sample(seq_len(nrow(otu_table_scaled_state1)), size = smp_size)
@@ -31,6 +31,6 @@ gettrainingdonesvm <- function(mytable3, classid, sampleid, ruleout, psd,
     train<-droplevels(train)
     test <- otu_table_scaled_state1[-train_ind,]
     RF_state_classify <- caret::train(as.factor(country)~. ,
-                                      data =train,method = "svmLinear")
+                                      data =train,method = "svmLinear",  tuneGrid = tunegrid)
     return(list(train, test, RF_state_classify))
 }
