@@ -495,21 +495,21 @@ server <- function(input, output, session){
     )
     output$selectclass <- renderUI({
         req(input$myresponseVector$datapath)
-        selectInput("ruleout", "Gene that is searched",
+        selectInput("ruleout", "Select levels to classify",
                     choices = levels(as.factor(readmetadata(
                         input$myresponseVector$datapath)[,input$classid])) , 
                     multiple = TRUE)
     })
     output$sselectclass <- renderUI({
         req(input$smyresponseVector$datapath)
-        selectInput("sruleout", "Gene that is searched",
+        selectInput("sruleout", "Select levels to classify",
                     choices = levels(as.factor(readmetadata(
                         input$smyresponseVector$datapath)[,input$sclassid])) , 
                     multiple = TRUE)
     })
     output$gselectclass <- renderUI({
         req(input$gmyresponseVector$datapath)
-        selectInput("gruleout", "Gene that is searched",
+        selectInput("gruleout", "Select levels to classify",
                     choices = levels(as.factor(readmetadata(
                         input$gmyresponseVector$datapath)[,input$gclassid])) , 
                     multiple = TRUE)
