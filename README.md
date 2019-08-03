@@ -7,23 +7,21 @@ A user-friendly interactive machine learning interface for metagenomic analysis 
     * Windows: https://cran.r-project.org/bin/windows/base/
     * Mac OS X: https://cran.r-project.org/bin/macosx/
     * Linux: https://cran.r-project.org/bin/linux/
-
-* Libraries
-    * shiny; shinythemes; randomForest; stringr; caret
-    * plyr; ggplot2; RColorBrewer; biomformat; biomaRt
     
+ * Libraries:
+   * devtools
+
+To install devtools, use the command:
+   install.packages("devtools") 
+
+Note: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer; biomformat; biomaRt. However, those packages will be installed if using install_github from below.
+
 **Installing megaR package:**
 
-* To use the megaR package, please make sure that all the prerequisites above are installed properly and  download megaR repository by clicking the [link](https://github.com/BioHPC/megaR/archive/master.zip) . Start RStudio and follow the instructions below from there to install the package.(You may additionally download data from Data folder.)
-   * Tools dropdown -> Install Packages
-   * Change the Install from dropdown to Package Archive File
-   * Locate the megaR-master folder (megaR-master)
-   * Click install
-* Another option is to use the follow R line:
-   * install.packages(“~/megaR-master”, repos = NULL, type = “source”)
-   
- Note: Please make sure that all the dependencies of required pacakges are installed properly if you ran into problem.
-   
+Using an R interface, type:
+
+devtools::install_github("BioHPC/megaR") 
+
 **Introduction**
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
