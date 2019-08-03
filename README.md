@@ -29,9 +29,10 @@ MegaR provides an unprecedented opportunity to develop  machine learning models 
 
 The description below walk you through the analysis of the WGS of three country cohort where samples are categorized based on their country of origin using machine leanring techniques. The general workflow is described in below.
 
-***Graphical Interface Workflow*** 
-Using R interface type
+**Graphical Interface Workflow** 
+
 library(megaR)
+
 megaR() 
 
 **Data Input**
@@ -74,4 +75,4 @@ From a practical perspective, it is important to identify features that are impo
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction-02.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction.png)
