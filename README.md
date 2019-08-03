@@ -16,7 +16,7 @@ To install devtools, use the command:
 
 Note: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer; biomformat; biomaRt. However, those packages will be installed if using install_github from below.
 
-**Installing megaR package:**
+***Installing megaR package:***
 
 Using an R interface, type:
 
@@ -29,9 +29,12 @@ MegaR provides an unprecedented opportunity to develop  machine learning models 
 
 The description below walk you through the analysis of the WGS of three country cohort where samples are categorized based on their country of origin using machine leanring techniques. The general workflow is described in below.
 
-**Usage with megaR():**
+***Graphical Interface Workflow*** 
+Using R interface type
+library(megaR)
+megaR() 
 
-   **Data Input**
+**Data Input**
 
 megaR can take both otu table and biom file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
 The data set can be found inside data folder. Clicking the browse tab, user can upload the input file from any where in the computer path.  After the data is uploaded, the contents of the data is displayed under the data tab. 
