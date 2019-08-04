@@ -29,6 +29,5 @@ Imports:
     biomformat,
     caret,
     DT,
-    graphics,
-    biomaRt
+    graphics
 RoxygenNote: 6.1.1
