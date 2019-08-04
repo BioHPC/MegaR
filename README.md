@@ -11,8 +11,9 @@ A user-friendly interactive machine learning interface for metagenomic analysis 
  * Libraries:
    * devtools
 
-To install devtools, use the command:
-   install.packages("devtools") 
+To install devtools, use below command:
+
+> install.packages("devtools") 
 
 Note: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer; biomformat; biomaRt. However, those packages will be installed if using install_github from below.
 
@@ -20,7 +21,7 @@ Note: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; gg
 
 Using an R interface, type:
 
-devtools::install_github("BioHPC/megaR") 
+> devtools::install_github("BioHPC/megaR") 
 
 **Introduction**
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
