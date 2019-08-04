@@ -26,7 +26,6 @@ Imports:
     plyr,
     ggplot2,
     RColorBrewer,
-    biomformat,
     caret,
     DT,
     graphics
