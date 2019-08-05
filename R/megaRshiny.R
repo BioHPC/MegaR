@@ -152,7 +152,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                        min = 60, max = 100, value = 90),
                                                                    shiny::uiOutput("selectclass"),#shiny::textInput("ruleout", label = "Remove class", value = "EST"),
                                                                    shiny::sliderInput("range", "Number of variable at split",
-                                                                                      min = 1, max = 1000, value = c(200,500))
+                                                                                      min = 1, max = 1000, value = c(200,500), round = T, step = 5)
                                                                ),
                                                                shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Train Error",
                                                                                                                    shiny::uiOutput("AOC"),
