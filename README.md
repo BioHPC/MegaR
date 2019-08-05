@@ -23,7 +23,8 @@ Using an R interface, type:
 
 > devtools::install_github("BioHPC/megaR") 
 
-**Introduction**
+  **Introduction  **
+  
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
 MegaR provides an unprecedented opportunity to develop  machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
