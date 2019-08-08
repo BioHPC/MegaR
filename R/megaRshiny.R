@@ -255,12 +255,12 @@ server <- function(input, output, session){
     
     output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
-        DT::datatable(myreaddata(),options = list(scrollX = TRUE)
+        DT::datatable(myreaddata(),options = list(scrollX = TRUE))
     })
     
     output$mGoodTbl <- DT::renderDataTable({
         shiny::req(input$norm)
-        DT::datatable(myGoodfeature(),options = list(scrollX = TRUE)
+        DT::datatable(myGoodfeature(),options = list(scrollX = TRUE))
     })
     
     v1 <- shiny::reactiveValues(data = NULL)
@@ -351,13 +351,13 @@ server <- function(input, output, session){
                                          input$level),input$threshold,
                             input$samplePercent, input$norm)
         if(input$choicemdl == "rfmodel"){
-           DT::datatable(getunknpredict(a,myrfmodel(),options = list(scrollX = TRUE )
+           DT::datatable(getunknpredict(a,myrfmodel(),options = list(scrollX = TRUE ))
                          }
         else if(input$choicemdl == "svmmodel"){
-          DT::datatable(getunknpredict(a,smyrfmodel(),options = list(scrollX = TRUE)
+          DT::datatable(getunknpredict(a,smyrfmodel(),options = list(scrollX = TRUE))
                         }
         else {
-           DT::datatable(getunknpredict(a,gmyrfmodel(), options = list(scrollX = TRUE)
+           DT::datatable(getunknpredict(a,gmyrfmodel(), options = list(scrollX = TRUE))
         }        
     })
     
