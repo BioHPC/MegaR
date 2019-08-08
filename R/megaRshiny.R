@@ -80,7 +80,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                        shiny::navbarPage("MegaR",id= "inTabsetm",
                                          shiny::tabPanel("Data Input",
                                                          shiny::fluidRow(shiny::sidebarLayout(
-                                                             shiny::sidebarPanel(fileInput(
+                                                             shiny::sidebarPanel(shiny::fileInput(
                                                                  inputId = "file1otutable",
                                                                  label = "COUNT TABLE",
                                                                  multiple = FALSE)
