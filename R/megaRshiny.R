@@ -87,7 +87,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
                                                                  shiny::tabPanel("Data",
-                                                                                   DT::dataTableOutput("mdataTbl", width = "100X"))
+                                                                                   DT::dataTableOutput("mdataTbl").dataTables_wrapper { overflow-x: scroll; })
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
@@ -255,7 +255,7 @@ server <- function(input, output, session){
     
     output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
-        DT::datatable(myreaddata(),options = list(scrollX = TRUE) ,pageLength = 15)
+        DT::datatable(myreaddata() ,pageLength = 15)
     })
     
     output$mGoodTbl <- DT::renderDataTable({
