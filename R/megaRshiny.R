@@ -87,7 +87,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
                                                                  shiny::tabPanel("Data",
-                                                                                   DT::dataTableOutput("mdataTbl"))
+                                                                                   DT::dataTableOutput("mdataTbl", width = "100X"))
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
