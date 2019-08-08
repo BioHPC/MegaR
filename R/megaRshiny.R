@@ -86,8 +86,8 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                  multiple = FALSE)
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
-                                                                 shiny::  tabPanel("Data",
-                                                                                   shiny::tableOutput("mdataTbl"))
+                                                                 shiny::tabPanel("Data",
+                                                                                   DT::dataTableOutput("mdataTbl"))
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
@@ -116,7 +116,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                          removed."),
                                                                      shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
                                                                                           selected = "")),
-                                                                 shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",shiny::tableOutput(
+                                                                 shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
                                                                      "mGoodTbl"))))))),
                                          shiny::navbarMenu("Model building",
                                                            shiny::tabPanel("GLM",
@@ -211,7 +211,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                    label= "Please input your unknown dataset",
                                                                    multiple= FALSE)),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
-                                                                                                      shiny::tableOutput("Preresult"))
+                                                                                                      DT::dataTableOutput("Preresult"))
                                                  )))),
                                              shiny:: tabPanel("Use default model")
                                          )
@@ -253,12 +253,12 @@ server <- function(input, output, session){
         return(a)
     })
     
-    output$mdataTbl <- shiny::renderTable({
+    output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
         return(myreaddata())
     }, rownames = TRUE)
     
-    output$mGoodTbl <-shiny:: renderTable({
+    output$mGoodTbl <- DT::renderDataTable({
         shiny::req(input$norm)
         myGoodfeature()
     }, rownames =  T)
@@ -345,7 +345,7 @@ server <- function(input, output, session){
         
     })
     
-    output$Preresult <- shiny::renderTable({
+    output$Preresult <- DT::renderDataTable({
         shiny::req(input$unknw$datapath)
         a <- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
                                          input$level),input$threshold,
