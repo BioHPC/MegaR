@@ -87,7 +87,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
                                                                  shiny::tabPanel("Data",
-                                                                                   DT::dataTableOutput("mdataTbl"))
+                                                                                   DT::dataTableOutput("mdataTbl", width = 900))
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
@@ -117,7 +117,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                      shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
                                                                                           selected = "")),
                                                                  shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
-                                                                     "mGoodTbl"))))))),
+                                                                     "mGoodTbl", width = 900))))))),
                                          shiny::navbarMenu("Model building",
                                                            shiny::tabPanel("GLM",
                                                                            shiny::sidebarLayout(shiny::sidebarPanel(
@@ -211,7 +211,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                    label= "Please input your unknown dataset",
                                                                    multiple= FALSE)),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
-                                                                                                      DT::dataTableOutput("Preresult"))
+                                                                                                      DT::dataTableOutput("Preresult", width = 900))
                                                  )))),
                                              shiny:: tabPanel("Use default model")
                                          )
@@ -255,13 +255,13 @@ server <- function(input, output, session){
     
     output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
-        return(myreaddata())
-    }, rownames = TRUE)
+        DT::datatable(myreaddata(),options = list(scrollX = TRUE)
+    })
     
     output$mGoodTbl <- DT::renderDataTable({
         shiny::req(input$norm)
-        myGoodfeature()
-    }, rownames =  T)
+        DT::datatable(myGoodfeature(),options = list(scrollX = TRUE)
+    })
     
     v1 <- shiny::reactiveValues(data = NULL)
     v2 <- shiny::reactiveValues(data = NULL)
@@ -351,14 +351,15 @@ server <- function(input, output, session){
                                          input$level),input$threshold,
                             input$samplePercent, input$norm)
         if(input$choicemdl == "rfmodel"){
-            getunknpredict(a,myrfmodel())}
+           DT::datatable(getunknpredict(a,myrfmodel(),options = list(scrollX = TRUE )
+                         }
         else if(input$choicemdl == "svmmodel"){
-            getunknpredict(a,smyrfmodel())}
+          DT::datatable(getunknpredict(a,smyrfmodel(),options = list(scrollX = TRUE)
+                        }
         else {
-            getunknpredict(a,gmyrfmodel())
-        }
-        
-    }, rownames= TRUE)
+           DT::datatable(getunknpredict(a,gmyrfmodel(), options = list(scrollX = TRUE)
+        }        
+    })
     
     #######################################################################
     ##### metaphlan svm #############
