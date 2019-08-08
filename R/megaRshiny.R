@@ -87,7 +87,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
                                                                  shiny::tabPanel("Data",
-                                                                                   DT::dataTableOutput("mdataTbl").dataTables_wrapper { overflow-x: scroll; })
+                                                                                   DT::dataTableOutput("mdataTbl", width = 100))
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
@@ -117,7 +117,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                      shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
                                                                                           selected = "")),
                                                                  shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
-                                                                     "mGoodTbl"))))))),
+                                                                     "mGoodTbl", width = 100))))))),
                                          shiny::navbarMenu("Model building",
                                                            shiny::tabPanel("GLM",
                                                                            shiny::sidebarLayout(shiny::sidebarPanel(
@@ -211,7 +211,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                    label= "Please input your unknown dataset",
                                                                    multiple= FALSE)),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
-                                                                                                      DT::dataTableOutput("Preresult"))
+                                                                                                      DT::dataTableOutput("Preresult", width = 100))
                                                  )))),
                                              shiny:: tabPanel("Use default model")
                                          )
@@ -255,7 +255,7 @@ server <- function(input, output, session){
     
     output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
-        DT::datatable(myreaddata() ,pageLength = 15)
+        DT::datatable(myreaddata() ,options = list(scrollX = TRUE),pageLength = 15)
     })
     
     output$mGoodTbl <- DT::renderDataTable({
