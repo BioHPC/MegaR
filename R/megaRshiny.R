@@ -87,7 +87,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                              ),
                                                              shiny::mainPanel(type = "tab",shiny::tabsetPanel(
                                                                  shiny::tabPanel("Data",
-                                                                                   DT::dataTableOutput("mdataTbl", width = 100))
+                                                                                   DT::dataTableOutput("mdataTbl", width = 500))
                                                                  #tabPanel("G_Heatmap",
                                                                  #plotOutput("mgenus")),
                                                                  #tabPanel("S_Heatmap",
@@ -117,7 +117,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                      shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
                                                                                           selected = "")),
                                                                  shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
-                                                                     "mGoodTbl", width = 100))))))),
+                                                                     "mGoodTbl", width = 500))))))),
                                          shiny::navbarMenu("Model building",
                                                            shiny::tabPanel("GLM",
                                                                            shiny::sidebarLayout(shiny::sidebarPanel(
@@ -211,7 +211,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                    label= "Please input your unknown dataset",
                                                                    multiple= FALSE)),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
-                                                                                                      DT::dataTableOutput("Preresult", width = 100))
+                                                                                                      DT::dataTableOutput("Preresult", width = 500))
                                                  )))),
                                              shiny:: tabPanel("Use default model")
                                          )
