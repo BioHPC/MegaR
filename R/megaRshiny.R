@@ -351,13 +351,13 @@ server <- function(input, output, session){
                                          input$level),input$threshold,
                             input$samplePercent, input$norm)
         if(input$choicemdl == "rfmodel"){
-           DT::datatable(getunknpredict(a,myrfmodel(),options = list(scrollX = TRUE ))
+           DT::datatable(getunknpredict(a,myrfmodel(),options = list(scrollX = TRUE )))
                          }
         else if(input$choicemdl == "svmmodel"){
-          DT::datatable(getunknpredict(a,smyrfmodel(),options = list(scrollX = TRUE))
+          DT::datatable(getunknpredict(a,smyrfmodel(),options = list(scrollX = TRUE)))
                         }
         else {
-           DT::datatable(getunknpredict(a,gmyrfmodel(), options = list(scrollX = TRUE))
+           DT::datatable(getunknpredict(a,gmyrfmodel(), options = list(scrollX = TRUE)))
         }        
     })
     
