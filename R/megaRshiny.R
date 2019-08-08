@@ -134,7 +134,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                            ),
                                                                            shiny:: mainPanel(shiny::tabsetPanel(shiny:: tabPanel("Train Error",
                                                                                                                                  shiny::verbatimTextOutput("gAOC")),
-                                                                                                                shiny::tabPanel("Test Error",uiOutput("gmyconfusionMatrix"),
+                                                                                                                shiny::tabPanel("Test Error",shiny::uiOutput("gmyconfusionMatrix"),
                                                                                                                                 shiny:: actionButton("gaplot2", "Plot test error"),
                                                                                                                                 shiny:: uiOutput("gdownload2") ,
                                                                                                                                 shiny:: actionButton("gastats2", "Stats of the test error"))
@@ -193,20 +193,20 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                            
                                          )),
                                          shiny::tabPanel("Validate",
-                                                         shiny:: sidebarLayout(sidebarPanel(
+                                                         shiny:: sidebarLayout(shiny::sidebarPanel(
                                                              shiny::radioButtons("choicemdl", label = "Choose model",
                                                                                  choices = c(RandomForest = "rfmodel" ,
                                                                                              SVM = "svmmodel", GLM = "glmmodel"),
                                                                                  selected = ""),
                                                              shiny:: numericInput("ntimes", "number of validation set",min= 1, max = 10,
                                                                                   step = 1, value = 3)),
-                                                             shiny:: mainPanel(shiny::tabsetPanel(tabPanel("Accuracy",
+                                                             shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Accuracy",
                                                                                                            shiny::verbatimTextOutput("validationAcc")))
                                                              ))
                                          ),
                                          shiny:: navbarMenu("Prediction",shiny::tabPanel(
                                              "Use most recent model",
-                                             shiny::sidebarLayout(sidebarPanel(
+                                             shiny::sidebarLayout(shiny::sidebarPanel(
                                                  shiny:: fileInput(inputId = "unknw",
                                                                    label= "Please input your unknown dataset",
                                                                    multiple= FALSE)),
