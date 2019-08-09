@@ -78,6 +78,8 @@ The error rate of prediction on test set is a better estimate of model accuracy 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error_db.png)
 
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
+
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/topimptfeature.png)
  
    **Validation**
  ![](https://github.com/BioHPC/megaR/blob/master/screenshot/validation.png)
