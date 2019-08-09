@@ -57,7 +57,7 @@ There are three machine learing model available for classification purpose. Sele
 Upload the metadata that contain information about the sample.The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in initial metaphlan/qiime files. Mention which column in metadata contain id that match with the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training an model is given by the plot under error rate.
 
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/rf_plot_train.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/rf_train_plot.png)
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error_stats.png)
 
 An additional feature of tool that can improve accuracy is **select level to classify**  tab. When more than two classes are present, only the class that are examined for classification can be selected. This also allows to remove control and other less important class from the model thus increasing the model accuracy.
