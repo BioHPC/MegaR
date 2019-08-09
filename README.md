@@ -42,13 +42,13 @@ megaR()
 megaR can take both otu table and biom file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
 The data set can be found inside data folder. Clicking the browse tab, user can upload the input file from any where in the computer path.  After the data is uploaded, the contents of the data is displayed under the data tab. 
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/data_input.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Data_input_table.png)
 
    **Data Preprocessing**
 
 After the data is loaded, it can be preprocessed to allow eficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. All tabs trakes back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocess_genus.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_table.png)
 
    **Model Development**
 
