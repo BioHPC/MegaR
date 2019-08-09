@@ -79,4 +79,4 @@ From a practical perspective, it is important to identify features that are impo
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction_table.png)
