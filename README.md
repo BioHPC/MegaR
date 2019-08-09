@@ -48,7 +48,7 @@ The data set can be found inside data folder. Clicking the browse tab, user can 
 
 After the data is loaded, it can be preprocessed to allow eficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. All tabs trakes back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_table.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_species.png)
 
    **Model Development**
 
