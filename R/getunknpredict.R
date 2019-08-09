@@ -13,5 +13,6 @@ getunknpredict <- function(unknormdata, a){
     new_leveled_ukn.s1[is.na(new_leveled_ukn.s1)] <- 0
     #prediction of unknown data
     RF.predict <- stats::predict(a[[3]] , t(new_leveled_ukn.s1))
-    return(RF.predict)
+    tablemy <- data.frame( rownames(t(new_leveled_ukn.s1)), RF.predict)
+    return(tablemy)
 }
