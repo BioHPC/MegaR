@@ -27,9 +27,9 @@ Using an R interface, type:
   
 Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
-MegaR provides an unprecedented opportunity to develop  machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
+MegaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
 
-The description below walk you through the analysis of the WGS of three country cohort where samples are categorized based on their country of origin using machine leanring techniques. The general workflow is described in below.
+The description below walks you through the analysis of the WGS of T1D cohort where samples are categorized based on their country of origin using machine learning techniques. The general workflow is described in below.
 
 **Graphical Interface Workflow** 
 
@@ -42,21 +42,21 @@ megaR()
 **Data Input**
 
 megaR can take both otu table and biom file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
-The data set can be found inside data folder. Clicking the browse tab, user can upload the input file from any where in the computer path.  After the data is uploaded, the contents of the data is displayed as an interactive table under the data tab. 
+The data set can be found inside data folder. Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Data_input_table.png)
 
    **Data Preprocessing**
 
-After the data is loaded, it can be preprocessed to allow eficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. All tabs trackes back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
+After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_species.png)
 
    **Model Development**
 
-There are three machine learing model available for classification purpose.Generalized Linear Model(GLM), Random Forest Model and Support Vector Machines. Select appropriate machine learning model.
+There are three machine learning model available for classification purposes. Generalized Linear Model (GLM), Random Forest Model and Support Vector Machines. Select appropriate machine learning model.
 
-Upload the metadata that contain information about the sample.The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in initial metaphlan/qiime files. Mention which column in metadata contain id that match with the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training an model is given by the plot under error rate.
+Upload the metadata that contain information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in initial metaphlan/qiime files. Mention which column in metadata contain id that match with the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/rf_train_plot.png) 
 
@@ -65,11 +65,11 @@ The statistics can be viewed using Stats tab.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error_stats_rf_db.png)
 
-For random forest model, user can select the number of predictor to be used during each split. Similiar, users can also select the range of cost to be applied to support vector machines. A plot for the accracy of the model based on selected parameter can be seen in accuracy tab. megaR selects the best accuracies from among the selected parameter for model building.
+For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. megaR selects the best accuracies from among the selected parameter for model building.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/accuracy_rf_plot.png)
 
-An additional feature of tool that can improve accuracy is **select level to classify**  tab. When more than two classes are present, only the class that are examined for classification can be selected. This also allows to remove control and other less important class from the model thus increasing the model accuracy.
+An additional feature of tool that can improve accuracy is **select level to classify** tab. When more than two classes are present, only the class that are examined for classification can be selected. This also allows to remove control and other less important class from the model thus increasing the model accuracy.
 
 Plots can be downloaded by clicking in download the plot button to save for future use.
 
