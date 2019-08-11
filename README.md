@@ -1,5 +1,10 @@
-A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
-----
+# megaR: A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
+  
+Machine learning has been utilized in many applications from biomedical imaging to business analytics. Machine learning is stipulated to be a strong method for diagnostics and even for determining therapeutics in future as we move to personalized medicine. megaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform classification of data samples based on the optimal model we developed. 
+
+The description below walks you through the analysis of the WGS of T1D cohort where samples are categorized based on their country of origin using machine learning techniques. The general workflow is described in below.
+
+
 **Pre-requisites:**
 
 * R version
@@ -23,13 +28,7 @@ Using an R interface, type:
 
 > devtools::install_github("BioHPC/megaR") 
 
-**Introduction**
-  
-Machine learning is a very interesting field which has been utilized in many fields from biomedical imaging to business analytics. Machine learning is stipulated to be a strong tool for diagnostics and even for determining therapeutics in future as we move to personalized medicine. 
 
-MegaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform do classification of data based on the optimal model we developed. 
-
-The description below walks you through the analysis of the WGS of T1D cohort where samples are categorized based on their country of origin using machine learning techniques. The general workflow is described in below.
 
 **Graphical Interface Workflow** 
 
