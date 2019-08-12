@@ -42,8 +42,8 @@ In RStudio, use following command:
 
 **Data Input**
 
-megaR can take both otu table and biom file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
-The data set can be found inside data folder. Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
+megaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
+megaR provides sample data from the DIABIMMUNE project. If you clone or download megaR full package, the data files are located in data folder. Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Data_input_table.png)
 
