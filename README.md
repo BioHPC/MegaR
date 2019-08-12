@@ -2,10 +2,12 @@
   
 Machine learning has been utilized in many applications from biomedical imaging to business analytics. Machine learning is stipulated to be a strong method for diagnostics and even for determining therapeutics in future as we move to personalized medicine. megaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform classification of data samples based on the optimal model we developed. 
 
-The description below walks you through the analysis of the WGS of T1D cohort where samples are categorized based on their country of origin using machine learning techniques. The general workflow is described in below.
+The description below walks you through the analysis of the WGS of T1D cohort from DIABIMMUNE project (https://pubs.broadinstitute.org/diabimmune) where the goal of this cohort is to compare microbiome in infants who have developed type 1 diabetes (T1D) or serum autoantibodies (markers predicting the onset of T1D) with healthy controls in the same area.
+
+The general workflow is described in below.
 
 
-**Pre-requisites:**
+### Pre-requisites:
 
 * R version
     * Download R (>3.6.0) version from CRAN.
@@ -17,26 +19,26 @@ The description below walks you through the analysis of the WGS of T1D cohort wh
    * devtools
 
 To install devtools, use below command:
-
+```  
 > install.packages("devtools") 
+```  
+*Note*: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be installed if using install_github from below.
 
-Note: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be installed if using install_github from below.
-
-***Installing megaR package:***
+## Installing megaR:
 
 Using an R interface, type:
-
+```  
 > devtools::install_github("BioHPC/megaR") 
+```  
 
+## Graphical Interface Workflow
 
+In RStudio, use following command:
 
-**Graphical Interface Workflow** 
-
-In RStudio, use following command.
-
-library(megaR)
-
-megaR() 
+```
+> library(megaR)
+> megaR() 
+```
 
 **Data Input**
 
@@ -45,13 +47,13 @@ The data set can be found inside data folder. Clicking the browse tab, user can 
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Data_input_table.png)
 
-   **Data Preprocessing**
+**Data Preprocessing**
 
 After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_species.png)
 
-   **Model Development**
+**Model Development**
 
 There are three machine learning model available for classification purposes. Generalized Linear Model (GLM), Random Forest Model and Support Vector Machines. Select appropriate machine learning model.
 
@@ -80,10 +82,10 @@ From a practical perspective, it is important to identify features that are impo
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/topimptfeature.png)
  
-   **Validation**
+**Validation**
  ![](https://github.com/BioHPC/megaR/blob/master/screenshot/validation.png)
  
-   **Prediction**
+**Prediction**
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
