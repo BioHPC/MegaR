@@ -22,7 +22,7 @@ To install devtools, use below command:
 ```  
 > install.packages("devtools") 
 ```  
-*Note*: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be installed if using install_github from below.
+*Note*: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be automatically installed if using install_github from below.
 
 ## Installing megaR:
 
