@@ -43,21 +43,21 @@ In RStudio, use following command:
 **Data Input**
 
 megaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
-megaR provides sample data from the DIABIMMUNE project. If you clone or download megaR full package, the data files are located in data folder. Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
+megaR provides sample data from the DIABIMMUNE project. If you clone or download the full megaR package, the data files are located in data folder. Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Data_input_table.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/DataInput.gif)
 
 **Data Preprocessing**
 
-After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tab returns genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
+After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing_species.png)
+![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing.gif)
 
 **Model Development**
 
-There are three machine learning model available for classification purposes. Generalized Linear Model (GLM), Random Forest Model and Support Vector Machines. Select appropriate machine learning model.
+There are three machine learning models available for classification. Generalized Linear Model (GLM), Random Forest Model and Support Vector Machines. Select the appropriate machine learning model.
 
-Upload the metadata that contain information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in initial metaphlan/qiime files. Mention which column in metadata contain id that match with the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
+Upload the metadata that contains information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in the initial metaphlan/qiime file. Mention which column in metadata contains the id that matches  the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/rf_train_plot.png) 
 
@@ -70,9 +70,9 @@ For random forest model, user can select the number of predictors to be used dur
 
 ![](https://github.com/BioHPC/megaR/blob/master/screenshot/accuracy_rf_plot.png)
 
-An additional feature of tool that can improve accuracy is **select level to classify** tab. When more than two classes are present, only the class that are examined for classification can be selected. This also allows to remove control and other less important class from the model thus increasing the model accuracy.
+An additional feature of tool that can improve accuracy is the **select level to classify** tab. When more than two classes are present, only the classes that are examined for classification can be selected. This also allows the removal of control and other less important classes from the model, thus increasing the model accuracy.
 
-Plots can be downloaded by clicking in download the plot button to save for future use.
+Plots can be downloaded by clicking the download the plot button to save for future use.
 
 The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
 
