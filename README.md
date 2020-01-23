@@ -17,7 +17,7 @@ The general workflow is described in below.
 
 ## Installing megaR:
 
-There are two ways to install megaR. The firstis using devtools, and the second is using the megaR.tar.gz file.
+There are two ways to install megaR. The first is using devtools, and the second is using the megaR.tar.gz file.
 
 Devtools installation:
 
