@@ -14,7 +14,13 @@ The general workflow is described in below.
     * Windows: https://cran.r-project.org/bin/windows/base/
     * Mac OS X: https://cran.r-project.org/bin/macosx/
     * Linux: https://cran.r-project.org/bin/linux/
-    
+
+## Installing megaR:
+
+There are two ways to install megaR. The firstis using devtools, and the second is using the megaR.tar.gz file.
+
+Devtools installation:
+
  * Libraries:
    * devtools
 
@@ -24,12 +30,13 @@ To install devtools, use below command:
 ```  
 *Note*: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be automatically installed if using install_github from below.
 
-## Installing megaR:
 
 Using an R interface, type:
 ```  
 > devtools::install_github("BioHPC/megaR") 
 ```  
+
+megaR.tar.gz installation:
 
 ## Graphical Interface Workflow
 
