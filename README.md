@@ -38,7 +38,7 @@ Using an R interface, type:
 
 megaR.tar.gz installation:
 
-Download the megaR.tar.gz file from [here](https://github.com/BioHPC/megaR/megaR.tar.gz)
+Download the megaR.tar.gz file from [here](https://github.com/BioHPC/megaR_1.0.tar.gz)
 
 In the R console, type:
 ```
