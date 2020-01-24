@@ -50,7 +50,10 @@ Once in the correct location, type:
 ```
 >install.packages(megaR.tar.gz)
 ```
-Alternatively, you may install the package using the R interface by going to Tools > Installpackages... > Package Archive File > Browse... > megaR.tar.gz
+Alternatively, you may install the package using the R interface by going to:
+```
+Tools > Installpackages... > Package Archive File > Browse... > megaR.tar.gz
+```
 
 ## Graphical Interface Workflow
 
