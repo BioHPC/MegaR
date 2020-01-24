@@ -2,7 +2,7 @@ Package: megaR
 Type: Package
 Title: An interactive R package for Metagenomic Data Analysis for Disease
     Prediction
-Version: 0.1.0
+Version: 1.0
 Depends: R (>= 3.4)
 Authors@R: c(person("Eliza", "Dhungel", role = c("aut", "cre"),
                                   email = "eliza.dhungel@slu.edu"),
