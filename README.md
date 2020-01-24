@@ -38,6 +38,20 @@ Using an R interface, type:
 
 megaR.tar.gz installation:
 
+Download the megaR.tar.gz file from [here](https://github.com/BioHPC/megaR/megaR.tar.gz)
+
+In the R console, type:
+```
+>setwdir("/path/")
+```
+Where path is the location of the downloaded megaR.tar.gz file.
+
+Once in the correct location, type:
+```
+>install.packages(megaR.tar.gz)
+```
+Alternatively, you may install the package using the R interface by going to Tools > Installpackages... > Package Archive File > Browse... > megaR.tar.gz
+
 ## Graphical Interface Workflow
 
 In RStudio, use following command:
