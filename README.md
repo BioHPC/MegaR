@@ -6,6 +6,9 @@ The description below walks you through the analysis of the WGS of T1D cohort fr
 
 The general workflow is described in below.
 
+If you would like to preview megaR without downloading the package, you can visit https://megar.shinyapps.io/preview 
+*Note:* You will still need to download the data set locally. That can be done [here (https://github.com/BioHPC/megaR/tree/master/data/WGS/T1D.zip)
+
 
 ### Pre-requisites:
 
