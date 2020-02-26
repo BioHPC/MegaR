@@ -1,13 +1,13 @@
-# megaR: A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
+# MegaR: A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
   
-Machine learning has been utilized in many applications from biomedical imaging to business analytics. Machine learning is stipulated to be a strong method for diagnostics and even for determining therapeutics in future as we move to personalized medicine. megaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform classification of data samples based on the optimal model we developed. 
+Machine learning has been utilized in many applications from biomedical imaging to business analytics. Machine learning is stipulated to be a strong method for diagnostics and even for determining therapeutics in future as we move to personalized medicine. MegaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform classification of data samples based on the optimal model we developed. 
 
 The description below walks you through the analysis of the WGS of T1D cohort from DIABIMMUNE project (https://pubs.broadinstitute.org/diabimmune) where the goal of this cohort is to compare microbiome in infants who have developed type 1 diabetes (T1D) or serum autoantibodies (markers predicting the onset of T1D) with healthy controls in the same area.
 
 The general workflow is described in below.
 
-If you would like to preview megaR without downloading the package, you can visit https://megar.shinyapps.io/preview 
-*Note:* You will still need to download the data set locally. That can be done [here](https://github.com/BioHPC/megaR/tree/master/data/WGS/T1D.zip).
+If you would like to preview MegaR without downloading the package, you can visit https://megar.shinyapps.io/preview 
+*Note:* You will still need to download the data set locally. That can be done [here](https://github.com/BioHPC/MegaR/tree/master/data/WGS/T1D.zip).
 
 
 ### Pre-requisites:
@@ -18,9 +18,9 @@ If you would like to preview megaR without downloading the package, you can visi
     * Mac OS X: https://cran.r-project.org/bin/macosx/
     * Linux: https://cran.r-project.org/bin/linux/
 
-## Installing megaR:
+## Installing MegaR:
 
-There are two ways to install megaR. The first is using devtools, and the second is using the megaR.tar.gz file.
+There are two ways to install MegaR. The first is using devtools, and the second is using the MegaR.tar.gz file.
 
 Devtools installation:
 
@@ -31,31 +31,31 @@ To install devtools, use below command:
 ```  
 > install.packages("devtools") 
 ```  
-*Note*: megaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be automatically installed if using install_github from below.
+*Note*: MegaR also uses shiny, shinythemes; randomForest; stringr; caret, plyr; ggplot2; RColorBrewer, DT. However, those packages will be automatically installed if using install_github from below.
 
 
 Using an R interface, type:
 ```  
-> devtools::install_github("BioHPC/megaR") 
+> devtools::install_github("BioHPC/MegaR") 
 ```  
 
-megaR.tar.gz installation:
+MegaR.tar.gz installation:
 
-Download the megaR.tar.gz file from [here](https://github.com/BioHPC/megaR/blob/master/megaR_1.0.tar.gz)
+Download the MegaR.tar.gz file from [here](https://github.com/BioHPC/MegaR/blob/master/MegaR_1.0.tar.gz)
 
 In the R console, type:
 ```
 >setwdir("/path/")
 ```
-Where path is the location of the downloaded megaR.tar.gz file.
+Where path is the location of the downloaded MegaR.tar.gz file.
 
 Once in the correct location, type:
 ```
->install.packages(megaR.tar.gz)
+>install.packages(MegaR.tar.gz)
 ```
 Alternatively, you may install the package using the R interface by going to:
 ```
-Tools > Installpackages... > Package Archive File > Browse... > megaR.tar.gz
+Tools > Installpackages... > Package Archive File > Browse... > MegaR.tar.gz
 ```
 
 ## Graphical Interface Workflow
@@ -63,22 +63,22 @@ Tools > Installpackages... > Package Archive File > Browse... > megaR.tar.gz
 In RStudio, use following command:
 
 ```
-> library(megaR)
-> megaR() 
+> library(MegaR)
+> MegaR() 
 ```
 
 **Data Input**
 
-megaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
+MegaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
 megaR provides sample data from the DIABIMMUNE project. If you clone or download the full megaR package, the data files are located in data folder. Otherwise, the data set used for this example is the T1D dataset that can be downloaded from [here](https://github.com/BioHPC/megaR/tree/master/data/WGS/T1D.zip). Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/DataInput.gif)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/DataInput.gif)
 
 **Data Preprocessing**
 
 After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Preprocessing.gif)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Preprocessing.gif)
 
 **Model Development**
 
@@ -95,7 +95,7 @@ The statistics can be viewed using Stats tab.
 
 For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. megaR selects the best accuracies from among the selected parameter for model building.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/accuracy_rf_plot.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy_rf_plot.png)
 
 An additional feature of tool that can improve accuracy is the **select level to classify** tab. When more than two classes are present, only the classes that are examined for classification can be selected. This also allows the removal of control and other less important classes from the model, thus increasing the model accuracy.
 
@@ -103,17 +103,17 @@ Plots can be downloaded by clicking the download the plot button to save for fut
 
 The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error_db.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/test_error_db.png)
 
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/topimptfeature.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/topimptfeature.png)
  
 **Validation**
- ![](https://github.com/BioHPC/megaR/blob/master/screenshot/validation.png)
+ ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/validation.png)
  
 **Prediction**
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/Prediction_table.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_table.png)
