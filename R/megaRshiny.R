@@ -1,5 +1,5 @@
-#' megaR megaRshiny
-#' Use megaR through shiny interface
+#' MegaR megaRshiny
+#' Use MegaR through shiny interface
 #'
 #' This function allows the user to input data files and alter the input
 #' variables to make sure the formatting is correct.
@@ -47,7 +47,7 @@
 #' if(interactive()) {LONGO()}
 #' @export
 #'
- megaR <- function(){
+ MegaR <- function(){
 
 
 ##check prediction
