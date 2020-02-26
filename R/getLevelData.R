@@ -1,4 +1,4 @@
-#' megaR getLevelData
+#' MegaR getLevelData
 #'
 #' This is an internal function used to extract either the species or genus
 #' level of information
