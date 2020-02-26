@@ -70,7 +70,7 @@ In RStudio, use following command:
 **Data Input**
 
 MegaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
-megaR provides sample data from the DIABIMMUNE project. If you clone or download the full megaR package, the data files are located in data folder. Otherwise, the data set used for this example is the T1D dataset that can be downloaded from [here](https://github.com/BioHPC/megaR/tree/master/data/WGS/T1D.zip). Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
+MegaR provides sample data from the DIABIMMUNE project. If you clone or download the full MegaR package, the data files are located in data folder. Otherwise, the data set used for this example is the T1D dataset that can be downloaded from [here](https://github.com/BioHPC/MegaR/tree/master/data/WGS/T1D.zip). Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/DataInput.gif)
 
@@ -86,14 +86,14 @@ There are three machine learning models available for classification. Generalize
 
 Upload the metadata that contains information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in the initial metaphlan/qiime file. Mention which column in metadata contains the id that matches  the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/rf_train_plot.png) 
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/rf_train_plot.png) 
 
 The statistics can be viewed using Stats tab.
 
 
-![](https://github.com/BioHPC/megaR/blob/master/screenshot/test_error_stats_rf_db.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/test_error_stats_rf_db.png)
 
-For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. megaR selects the best accuracies from among the selected parameter for model building.
+For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. MegaR selects the best accuracies from among the selected parameter for model building.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy_rf_plot.png)
 
