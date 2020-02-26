@@ -44,7 +44,7 @@
 #' @importFrom utils write.csv
 #' @importFrom utils write.table
 #' @examples
-#' if(interactive()) {LONGO()}
+#' if(interactive()) {MegaR()}
 #' @export
 #'
  MegaR <- function(){
