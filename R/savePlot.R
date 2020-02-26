@@ -1,4 +1,4 @@
-#' megaR savePlot
+#' MegaR savePlot
 #'
 #' This is a internal function. This function allows the program to
 #' save the plot generated in the program.
