@@ -1,4 +1,4 @@
-#' megaR analysis
+#' MegaR analysis
 #' This function plots the top 10 important features for random forest
 #' classification.
 #'
