@@ -1,4 +1,4 @@
-Package: megaR
+Package: MegaR
 Type: Package
 Title: An interactive R package for Metagenomic Data Analysis for Disease
     Prediction
@@ -10,7 +10,7 @@ Authors@R: c(person("Eliza", "Dhungel", role = c("aut", "cre"),
                            email="ted.ahn@slu.edu" ,role = "aut")
                            )
 Maintainer: Eliza Dhungel <eliza.dungel@slu.edu>
-Description: megaR helps in building predictive models to classify metagenomic
+Description: MegaR helps in building predictive models to classify metagenomic
     samples.
     models and check the training and testing accuracy of the model and Built 
     models can also be validated and used for predicting unknown samples.
