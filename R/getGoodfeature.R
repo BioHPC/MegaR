@@ -1,4 +1,4 @@
-#'megaR getGoodfeature
+#'MegaR getGoodfeature
 #'
 #' This is an internal function used to collect good features
 #'
