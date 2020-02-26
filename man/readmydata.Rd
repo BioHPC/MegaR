@@ -2,7 +2,7 @@
 % Please edit documentation in R/readmetadata.R
 \name{readmydata}
 \alias{readmydata}
-\title{megaR analysis}
+\title{MegaR analysis}
 \usage{
 readmydata(x)
 }
@@ -10,5 +10,5 @@ readmydata(x)
 \item{x}{the path to the file}
 }
 \description{
-megaR analysis
+MegaR analysis
 }
