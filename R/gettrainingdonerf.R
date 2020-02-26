@@ -1,4 +1,4 @@
-#' megaR gettrainingdonerf
+#' MegaR gettrainingdonerf
 #' @param mytable3 processed input file with features
 #' @param classid the column number in metadata file in which the class of
 #' input data is stored
