@@ -1,4 +1,4 @@
-#' megaR gettrainingdonesvm
+#' MegaR gettrainingdonesvm
 #'
 #' This is the function to get class information for the input data from the
 #' metadata file and build the support vector machines as predictive models.
