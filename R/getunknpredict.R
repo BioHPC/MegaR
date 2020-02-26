@@ -1,4 +1,4 @@
-#' megaR analysis
+#' MegaR analysis
 #'
 #' This is an internal function used to predict the given dataset.
 #'
