@@ -1,4 +1,4 @@
-#' megaR validation
+#' MegaR validation
 #'
 #' This function conducts 10 fold cross validation on N set of data
 #' @param Num No. of sets to run for validation
