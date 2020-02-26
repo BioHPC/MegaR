@@ -1,4 +1,4 @@
-#' megaR analysis
+#' MegaR analysis
 #' This is internal function to read data
 
 #' @param x the path to the file
@@ -10,7 +10,7 @@ readmetadata <- function(x){
     return(mymetaData)
 }
 
-#' megaR analysis
+#' MegaR analysis
 #' @param x the path to the file
 #' @export
 readmydata <- function(x){
