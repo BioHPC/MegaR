@@ -2,7 +2,7 @@
 % Please edit documentation in R/getunknpredict.R
 \name{getunknpredict}
 \alias{getunknpredict}
-\title{megaR analysis}
+\title{MegaR analysis}
 \usage{
 getunknpredict(unknormdata, a)
 }

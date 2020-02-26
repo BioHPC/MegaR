@@ -2,7 +2,7 @@
 % Please edit documentation in R/getGoodfeature.R
 \name{getGoodfeature}
 \alias{getGoodfeature}
-\title{megaR getGoodfeature}
+\title{MegaR getGoodfeature}
 \usage{
 getGoodfeature(alltable2, threshold, samplePercent, normval)
 }

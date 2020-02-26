@@ -2,7 +2,7 @@
 % Please edit documentation in R/getLevelData.R
 \name{getLevelData}
 \alias{getLevelData}
-\title{megaR getLevelData}
+\title{MegaR getLevelData}
 \usage{
 getLevelData(alltable, leveld)
 }

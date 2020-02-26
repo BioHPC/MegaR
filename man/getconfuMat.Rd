@@ -2,7 +2,7 @@
 % Please edit documentation in R/getconfuMat.R
 \name{getconfuMat}
 \alias{getconfuMat}
-\title{megaR analysis}
+\title{MegaR analysis}
 \usage{
 getconfuMat(testdata, rfmodel)
 }

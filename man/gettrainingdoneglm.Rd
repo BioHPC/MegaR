@@ -2,7 +2,7 @@
 % Please edit documentation in R/gettrainingdoneglm.R
 \name{gettrainingdoneglm}
 \alias{gettrainingdoneglm}
-\title{megaR analysis}
+\title{MegaR analysis}
 \usage{
 gettrainingdoneglm(mytable3, classid, sampleid, ruleout, psd, metadat)
 }
@@ -24,5 +24,5 @@ that match with input data}
  @export}
 }
 \description{
-megaR analysis
+MegaR analysis
 }

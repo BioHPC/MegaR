@@ -3,7 +3,7 @@
 #'
 #' This function allows the user to input data files and alter the input
 #' variables to make sure the formatting is correct.
-#' They can then run the megaR package which will output the results and plots
+#' They can then run the MegaR package which will output the results and plots
 #' in the browser and allow the user to download results as needed.
 #'
 #' @importFrom shiny shinyUI

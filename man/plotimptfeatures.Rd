@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotimptfeatures.R
 \name{plotimptfeatures}
 \alias{plotimptfeatures}
-\title{megaR analysis
+\title{MegaR analysis
 This function plots the top 10 important features for random forest
 classification.}
 \usage{
@@ -14,7 +14,7 @@ plotimptfeatures(RF_state_classify, noOffeature)
 \item{noOffeature}{no. of feature =10}
 }
 \description{
-megaR analysis
+MegaR analysis
 This function plots the top 10 important features for random forest
 classification.
 }

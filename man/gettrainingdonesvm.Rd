@@ -2,7 +2,7 @@
 % Please edit documentation in R/gettrainingdonesvm.R
 \name{gettrainingdonesvm}
 \alias{gettrainingdonesvm}
-\title{megaR gettrainingdonesvm}
+\title{MegaR gettrainingdonesvm}
 \usage{
 gettrainingdonesvm(mytable3, classid, sampleid, ruleout, psd, metadat,
   svmmethod)

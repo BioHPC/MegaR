@@ -2,7 +2,7 @@
 % Please edit documentation in R/gettrainingdonerf.R
 \name{gettrainingdonerf}
 \alias{gettrainingdonerf}
-\title{megaR gettrainingdonerf}
+\title{MegaR gettrainingdonerf}
 \usage{
 gettrainingdonerf(mytable3, classid, sampleid, ruleout, psd, metadat)
 }
@@ -24,5 +24,5 @@ that match with input data}
  @export}
 }
 \description{
-megaR gettrainingdonerf
+MegaR gettrainingdonerf
 }

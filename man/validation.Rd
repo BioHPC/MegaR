@@ -2,7 +2,7 @@
 % Please edit documentation in R/validation.R
 \name{validation}
 \alias{validation}
-\title{megaR validation}
+\title{MegaR validation}
 \usage{
 validation(Num, modelclas, mytable3, classid, sampleid, ruleout, psd,
   metadat)

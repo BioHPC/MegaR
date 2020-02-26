@@ -2,7 +2,7 @@
 % Please edit documentation in R/savePlot.R
 \name{savePlot}
 \alias{savePlot}
-\title{megaR savePlot}
+\title{MegaR savePlot}
 \usage{
 savePlot(file, plotIn)
 }
