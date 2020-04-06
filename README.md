@@ -22,7 +22,7 @@ If you would like to preview MegaR without downloading the package, you can visi
 
 There are two ways to install MegaR. The first is using devtools, and the second is using the MegaR.tar.gz file.
 
-Devtools installation:
+##### [1] Devtools installation:
 
  * Libraries:
    * devtools
@@ -39,7 +39,7 @@ Using an R interface, type:
 > devtools::install_github("BioHPC/MegaR") 
 ```  
 
-MegaR.tar.gz installation:
+##### [2] MegaR.tar.gz installation:
 
 Download the MegaR.tar.gz file from [here](https://github.com/BioHPC/MegaR/blob/master/MegaR_1.0.tar.gz)
 
