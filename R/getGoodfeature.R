@@ -7,7 +7,7 @@
 #'  be across the sample
 #' @param samplePercent percentage of sample that should contain
 #'  the threshold amount of value in its feature
-#' @param normval wheather cumulative sum normalization is to be used or not
+#' @param normval wheather cumulative sum normalization(default), Trimmed mean-median normalization, quantile normalization or no normalization should be used
 #' @export
 quantile_normalisation <- function(df){
     df_rank <- apply(df,2,rank,ties.method="min")
