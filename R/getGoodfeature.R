@@ -46,7 +46,7 @@ getGoodfeature <- function(alltable2, threshold, samplePercent, normval){
         return(quantile_normalisation(a))
     }
     else if (normval == "TMM"){
-        df <- calcNormFactors(a, method = "TMM")
+        df <- edgeR::calcNormFactors(a, method = "TMM")
         for (val in 1:ncol(a)){ 
             mat <- a[,val]/(sum(a[,val]* df[val] ))
             newmatrix[,val] <-  mat
