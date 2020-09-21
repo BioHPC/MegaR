@@ -12,6 +12,7 @@
 
 getGoodfeature <- function(alltable2, threshold, samplePercent, normval){
     row2keep <- c()
+    
     cutoff <- ceiling( (samplePercent/100) * ncol(alltable2) )
     #updateProgress(detail = "Calculating processing-value")
     for ( i in 1:nrow(alltable2)) {
@@ -21,10 +22,24 @@ getGoodfeature <- function(alltable2, threshold, samplePercent, normval){
         }
     }
     #updateProgress(detail = "doing normalization")
-    a<-alltable2[ row2keep , , drop=F ]
+    a <- alltable2[ row2keep , , drop=F ]
+    newmatrix <- matrix(1:length(a), nrow = nrow(a), ncol = ncol(a))
     if (normval=="none"){
         # rownames(a) <- str_remove(rownames(a), "[.*__g]")
         return(a)
+    }
+    else if (normval=="quantile")
+    {
+        return(quantile_normalisation(a))
+    }
+    else if (normval == "TMM"){
+        df <- calcNormFactors(a, method = "TMM")
+        for (val in 1:ncol(a)){ 
+            mat <- a[,val]/(sum(a[,val]* df[val] ))
+            newmatrix[,val] <-  mat
+            
+        }
+        return(newmatrix)
     }
     else{
         normdata <- sweep(a, 2, colSums(a) , '/')*100
