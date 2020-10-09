@@ -72,13 +72,13 @@ In RStudio, use following command:
 MegaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
 MegaR provides sample data from the DIABIMMUNE project. If you clone or download the full MegaR package, the data files are located in data folder. Otherwise, the data set used for this example is the T1D dataset that can be downloaded from [here](https://github.com/BioHPC/MegaR/tree/master/data/WGS/T1D.zip). Clicking the browse tab, user can upload the input file from anywhere in the computer path.  After the data is uploaded, the contents of the data are displayed as an interactive table under the **Data** tab. 
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/DataInput.gif)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Datainput.gif)
 
 **Data Preprocessing**
 
 After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Preprocessing.gif)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/preprocessing.gif)
 
 **Model Development**
 
