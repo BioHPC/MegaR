@@ -93,7 +93,7 @@ The statistics can be viewed using Stats tab.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/teststats.PNG)
 
-Out program also provides the user with an AUC graph for further analysis under the **AUC** tab.
+MegaR also provides the user with an AUC graph for further analysis under the **AUC** tab.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/AUC.PNG)
 
