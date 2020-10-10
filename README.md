@@ -76,7 +76,7 @@ MegaR provides sample data from the DIABIMMUNE project. If you clone or download
 
 **Data Preprocessing**
 
-After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. After choosing either to normalize the data or not, the processed data that is ready for building machine learning models is seen under data tab.
+After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. MegaR provides three choixes for data normalization: Quantile, TMM, and none. After choosing the desired normalization, the processed data that is ready for building machine learning models is seen under the data tab.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/preprocessing.gif)
 
