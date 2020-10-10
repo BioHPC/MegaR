@@ -86,16 +86,20 @@ There are three machine learning models available for classification. Generalize
 
 Upload the metadata that contains information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in the initial metaphlan/qiime file. Mention which column in metadata contains the id that matches  the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/rf_train_plot.png) 
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/trainerror.png) 
 
 The statistics can be viewed using Stats tab.
 
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/test_error_stats_rf_db.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/teststats.png)
+
+Out program also provides the user with an AUC graph for further analysis under the **AUC** tab.
+
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/AUC.png)
 
 For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. MegaR selects the best accuracies from among the selected parameter for model building.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy_rf_plot.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy.png)
 
 An additional feature of tool that can improve accuracy is the **select level to classify** tab. When more than two classes are present, only the classes that are examined for classification can be selected. This also allows the removal of control and other less important classes from the model, thus increasing the model accuracy.
 
@@ -103,17 +107,17 @@ Plots can be downloaded by clicking the download the plot button to save for fut
 
 The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/test_error_db.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/testerror.png)
 
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/topimptfeature.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/features.png)
  
 **Validation**
- ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/validation.png)
+ ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Validation.png)
  
 **Prediction**
 
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_table.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/prediction.png)
