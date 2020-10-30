@@ -29,6 +29,5 @@ Imports:
     caret,
     DT,
     graphics,
-    MLeval,
-    edgeR
+    MLeval
 RoxygenNote: 7.0.0
