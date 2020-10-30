@@ -28,5 +28,7 @@ Imports:
     RColorBrewer,
     caret,
     DT,
-    graphics
-RoxygenNote: 6.1.1
+    graphics,
+    MLeval,
+    edgeR
+RoxygenNote: 7.0.0

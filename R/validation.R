@@ -26,7 +26,8 @@ validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
     otu_table_scaled_state$country <- factor(otu_table_scaled_state$country, levels = ruleout) # add this lin
     otu_table_scaled_state1 <- stats::na.omit(droplevels( otu_table_scaled_state))
     fit_control <- caret::trainControl(method = "LOOCV")
-
+    progress <- shiny::Progress$new(style = 'notification')
+    progress$set(message = "Working...",value = 0)
     Acc3<- NULL
     Kpp3 <- NULL
     for (i in 1:Num) {
@@ -36,7 +37,7 @@ validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
         mtrain <- otu_table_scaled_state1[train_ind, ]
         #mtrain<-droplevels(mtrain)
         test <- otu_table_scaled_state1[-train_ind,]
-        if(modelclas == "rfmodel"){
+        if(modelclas == "RF"){
             #RF_state_classify <- randomForest::randomForest(
              #   as.factor(country)~. ,data =train,importance = T,proximities=T)
             RF_state_classify_loocv <- caret::train(
@@ -60,7 +61,9 @@ validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
             Acc3[i] <- RF_state_classify_loocv$results$Accuracy
             Kpp3[i] <- RF_state_classify_loocv$results$Kappa
         }
+        progress$set(message = "Working...",value = ((i/Num)*100))
     }
+    on.exit(progress$close())
     sprintf("The 10 fold cross validated obtained from the average of %i
             independent run is  %f. ", Num , sum(Acc3)/Num )
 }

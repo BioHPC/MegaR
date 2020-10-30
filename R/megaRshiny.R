@@ -114,7 +114,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                      shiny:: helpText(
                                                                          "OTU that have less than the threshold value in given percentage of sample are
                                                                          removed."),
-                                                                     shiny:: radioButtons('norm' ,"Normalization",choices = c(YES = "css",NO="none"),
+                                                                     shiny:: radioButtons('norm' ,"Normalization",choices = c(TMM="TMM", Quantile = "quantile",NO="none"),
                                                                                           selected = "")),
                                                                  shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
                                                                      "mGoodTbl", width = 800))))))),
@@ -130,14 +130,17 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                                    min = 1, max = 100, value =53),
                                                                                shiny::numericInput("gpsd","percentage of data in training",
                                                                                                    min = 60, max = 100, value = 90),
-                                                                               shiny::uiOutput("gselectclass")#shiny::textInput("gruleout",label = "Remove class", value = "EST")
+                                                                               shiny::uiOutput("gselectclass"),#shiny::textInput("gruleout",label = "Remove class", value = "EST"),
+                                                                               shiny::actionButton("runglm","Done")
                                                                            ),
                                                                            shiny:: mainPanel(shiny::tabsetPanel(shiny:: tabPanel("Train Error",
                                                                                                                                  shiny::verbatimTextOutput("gAOC")),
                                                                                                                 shiny::tabPanel("Test Error",shiny::uiOutput("gmyconfusionMatrix"),
                                                                                                                                 shiny:: actionButton("gaplot2", "Plot test error"),
                                                                                                                                 shiny:: uiOutput("gdownload2") ,
-                                                                                                                                shiny:: actionButton("gastats2", "Stats of the test error"))
+                                                                                                                                shiny:: actionButton("gastats2", "Stats of the test error")),
+                                                                                                                shiny::tabPanel("AUC", shiny::imageOutput('aucglm')),
+                                                                                                                shiny::tabPanel("Download",shiny::downloadButton('downloadmodelglm',"Download Model"))
                                                                                                                 )))),
                                                            
                                                            shiny:: tabPanel("Random Forest", shiny::sidebarLayout(
@@ -152,7 +155,8 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                        min = 60, max = 100, value = 90),
                                                                    shiny::uiOutput("selectclass"),#shiny::textInput("ruleout", label = "Remove class", value = "EST"),
                                                                    shiny::sliderInput("range", "Number of variable at split",
-                                                                                      min = 1, max = 1000, value = c(1,101), round = T, step = 5)
+                                                                                      min = 1, max = 1000, value = c(1,101), round = T, step = 5),
+                                                                   shiny::actionButton("runrf","Done")
                                                                ),
                                                                shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Train Error",
                                                                                                                    shiny::uiOutput("AOC"),
@@ -166,7 +170,9 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                                                     shiny::actionButton("astats2", "Stats of the test error")),
                                                                                                    shiny:: tabPanel("Important feature", shiny::imageOutput("imptFeature"),
                                                                                                                     shiny:: uiOutput("download3")),
-                                                                                                   shiny::tabPanel("Accuracy", shiny::imageOutput("accuracy")))))
+                                                                                                   shiny::tabPanel("Accuracy", shiny::imageOutput("accuracy")),
+                                                                                                   shiny::tabPanel("AUC", shiny::imageOutput('auc')),
+                                                                                                   shiny::tabPanel("Download", shiny::downloadButton('downloadmodel', "Download Model")))))
                                                            ),
                                                            shiny:: tabPanel("SVM",shiny::sidebarLayout(shiny::sidebarPanel(
                                                                shiny::fileInput(inputId = "smyresponseVector",
@@ -180,7 +186,8 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                shiny::uiOutput("sselectclass"),#shiny:: textInput("sruleout", label = "Remove class", value = "EST"),
                                                                shiny::sliderInput("srange", "Cost for non-linearity",
                                                                                   min = 0, max = 5, value = c(0.02,0.8), step = 0.01),
-                                                               shiny::textInput("svmtd", label = "SVM Method", value = "svmLinear")
+                                                               shiny::textInput("svmtd", label = "SVM Method", value = "svmLinear"),
+                                                               shiny::actionButton("runsvm","Done")
                                                            ),
                                                            shiny::mainPanel(shiny::tabsetPanel(
                                                             shiny::tabPanel("Train Error", shiny::verbatimTextOutput("sAOC")),
@@ -188,18 +195,21 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                            shiny::actionButton("saplot2", "Plot test error"),
                                                                            shiny::uiOutput("sdownload2") ,
                                                                            shiny::actionButton("sastats2", "Stats of the test error")),
-                                                           shiny::tabPanel("Accuracy", shiny::imageOutput("saccuracy"))
+                                                           shiny::tabPanel("Accuracy", shiny::imageOutput("saccuracy")),
+                                                           shiny::tabPanel("AUC", shiny::imageOutput('aucsvm')),
+                                                           shiny::tabPanel("Download",shiny::downloadButton('downloadmodelsvm',"Download Model"))
                                                            )))
                                                            
                                          )),
                                          shiny::tabPanel("Validate",
                                                          shiny:: sidebarLayout(shiny::sidebarPanel(
-                                                             shiny::radioButtons("choicemdl", label = "Choose model",
-                                                                                 choices = c(RandomForest = "rfmodel" ,
-                                                                                             SVM = "svmmodel", GLM = "glmmodel"),
-                                                                                 selected = ""),
+                                                             #shiny::radioButtons("choicemdl", label = "Choose model",
+                                                                                 #choices = c(RandomForest = "rfmodel" ,
+                                                                                             #SVM = "svmmodel", GLM = "glmmodel"),
+                                                                                 #selected = ""),
                                                              shiny:: numericInput("ntimes", "number of validation set",min= 1, max = 10,
-                                                                                  step = 1, value = 3)),
+                                                                                  step = 1, value = 3),
+                                                             shiny::actionButton("val","Validate")),
                                                              shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Accuracy",
                                                                                                            shiny::verbatimTextOutput("validationAcc")))
                                                              ))
@@ -213,9 +223,22 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
                                                                                                       DT::dataTableOutput("Preresult", width = 800))
                                                  )))),
-                                             shiny:: tabPanel("Use default model")
+                                             shiny:: tabPanel("Use default model"),
+                                             shiny:: tabPanel("Use custom model",
+                                                 shiny::sidebarLayout(shiny::sidebarPanel(
+                                                     shiny::fileInput(inputId = 'unknw2',
+                                                                  label = 'Please input your unknown dataset',
+                                                                  multiple = FALSE),
+                                                 shiny::fileInput(inputId = 'upmodel',
+                                                                  label = "Please input your custom model",
+                                                                  multiple = FALSE)),
+                                                 shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
+                                                                                                     DT::dataTableOutput("Preresult2", width = 800))
+                                                ))))
+                                             
+                                             )
                                          )
-                                         ))
+                                         )
 
 
 server <- function(input, output, session){
@@ -232,27 +255,57 @@ server <- function(input, output, session){
         return(getGoodfeature(myLevelData(),input$threshold,input$samplePercent,
                               input$norm))
     })
-    
-    myrfmodel <- shiny::reactive({
+    progressbarrf <- shiny::observeEvent(input$runrf,{
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Ready to plot", value = 100)
+        Sys.sleep(3)
+        on.exit(progress$close())
+    })
+    progressbarglm <- shiny::observeEvent(input$runglm,{
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Ready to plot", value = 100)
+        Sys.sleep(3)
+        on.exit(progress$close())
+    })
+    progressbarsvm <- shiny::observeEvent(input$runsvm,{
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Ready to plot", value = 100)
+        Sys.sleep(3)
+        on.exit(progress$close())
+    })
+    myrfmodel <- shiny::eventReactive(input$runrf, {
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Working...",value = 100)
+        on.exit(progress$close())
         a <-gettrainingdonerf(myGoodfeature(), input$classid, input$sampleid,
                              input$ruleout, input$psd,readmetadata(
                                  input$myresponseVector$datapath),input$range)
-        return(a)
+        selectedmodel<<-'RF'
+        out<-list(a,'RF',input$level, input$threshold, input$samplePercent, input$norm)
+        return(out)
     })
-    smyrfmodel <-shiny:: reactive({
+    smyrfmodel <-shiny:: eventReactive(input$runsvm, {
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Working...",value = 100)
+        on.exit(progress$close())
         a <- gettrainingdonesvm(myGoodfeature(), input$sclassid,input$ssampleid,
                                 input$sruleout, input$spsd,readmetadata(
                                     input$smyresponseVector$datapath),input$svmtd, input$srange)
-        return(a)
+        selectedmodel<<-'svmmodel'
+        out<-list(a,'svmmodel',input$level, input$threshold, input$samplePercent, input$norm)
+        return(out)
     })
-    
-    gmyrfmodel <-shiny:: reactive({
+    gmyrfmodel <-shiny:: eventReactive(input$runglm, {
+        progress <- shiny::Progress$new(style = 'notification')
+        progress$set(message = "Working...",value = 100)
+        on.exit(progress$close())
         a<-gettrainingdoneglm(myGoodfeature(), input$gclassid,
                               input$gsampleid, input$gruleout, input$gpsd,
                               readmetadata(input$gmyresponseVector$datapath))
-        return(a)
+        selectedmodel<<-'glmmodel'
+        out<-list(a,'glmmodel',input$level, input$threshold, input$samplePercent, input$norm)
+        return(out)
     })
-    
     output$mdataTbl <- DT::renderDataTable({
         shiny::req(input$file1otutable$datapath)
         DT::datatable(myreaddata() ,options = list(scrollX = TRUE))
@@ -280,13 +333,13 @@ server <- function(input, output, session){
     
     output$plottrainerror <- shiny::renderPlot({
         shiny::req(input$myresponseVector$datapath)
-        graphics::plot(myrfmodel()[[3]]$finalModel,
+        graphics::plot(myrfmodel()[[1]][[3]]$finalModel,
                        main="Train Error during training model")
     })
     
     output$Statstrain <- shiny::renderPrint({
         shiny::req(input$myresponseVector$datapath)
-        myrfmodel()[[3]]$finalModel
+        myrfmodel()[[1]][[3]]$finalModel
     })
     
     output$myconfusionMatrix <- shiny::renderUI({
@@ -302,46 +355,57 @@ server <- function(input, output, session){
     shiny::observeEvent(input$astats2,{v2$data <- 2  })
     
     output$plotconfumat <- shiny::renderPlot({
-        getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
+        getconfuMat(myrfmodel()[[1]][[2]], myrfmodel()[[1]][[3]])[v2$data]
     })
     
     output$Statsconfu <- shiny::renderPrint({
-        shiny::req(myrfmodel())
-        getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]])[v2$data]
+        shiny::req(myrfmodel()[[1]])
+        getconfuMat(myrfmodel()[[1]][[2]], myrfmodel()[[1]][[3]])[v2$data]
     })
     
     output$imptFeature <-shiny:: renderPlot({
-        shiny::req(myrfmodel())
-        plotimptfeatures(myrfmodel()[[3]], 10)
+        shiny::req(myrfmodel)
+        plotimptfeatures(myrfmodel()[[1]][[3]], 10)
     })
-    
+    output$auc <- shiny::renderPlot({shiny::req(myrfmodel)
+        x <- MLeval::evalm(myrfmodel()[[1]][[3]])
+        x$roc
+    })
+    output$aucsvm <- shiny::renderPlot({shiny::req(smyrfmodel)
+        x <- MLeval::evalm(smyrfmodel()[[1]][[3]])
+        x$roc
+    })
+    output$aucglm <- shiny::renderPlot({shiny::req(gmyrfmodel)
+        x <- MLeval::evalm(gmyrfmodel()[[1]][[3]])
+        x$roc
+    })
     output$accuracy <- shiny::renderPlot({
-        shiny::req(myrfmodel())
-        plot(myrfmodel()[[3]])
+        shiny::req(myrfmodel)
+        plot(myrfmodel()[[1]][[3]])
     })
     output$saccuracy <- shiny::renderPlot({
-        shiny::req(smyrfmodel())
-        plot(smyrfmodel()[[3]])
+        shiny::req(smyrfmodel)
+        plot(smyrfmodel()[[1]][[3]])
     })
     
     output$validationAcc <-shiny:: renderPrint({
-        shiny::req(input$choicemdl)
-        if(input$choicemdl == "rfmodel"){
-            validation(input$ntimes, input$choicemdl,myGoodfeature(),input$classid,
+        shiny::req(input$val)
+        if(selectedmodel== 'RF'){
+            validation(input$ntimes, myrfmodel()[[2]],myGoodfeature(),input$classid,
                        input$sampleid,input$ruleout, input$psd,
                        readmetadata(input$myresponseVector$datapath),
-                       myrfmodel()[[3]]$finalModel$mtry)}
+                       myrfmodel()[[1]][[3]]$finalModel$mtry)}
         
-        else if (input$choicemdl == "svmmodel"){
-            validation(input$ntimes, input$choicemdl,myGoodfeature(), input$sclassid,
+        else if (selectedmodel=='svmmodel'){
+            validation(input$ntimes, smyrfmodel()[[2]],myGoodfeature(), input$sclassid,
                        input$ssampleid,input$sruleout, input$spsd,
                        readmetadata(input$smyresponseVector$datapath),
-                       smyrfmodel()$results$C[which(smyrfmodel()$results$Accuracy==max(smyrfmodel()$results$Accuracy))])}
+                       smyrfmodel()[[1]]$results$C[which(smyrfmodel()[[1]]$results$Accuracy==max(smyrfmodel()[[1]]$results$Accuracy))])}
         
         else{
-            validation(input$ntimes, input$choicemdl,myGoodfeature(), input$gclassid,
+            validation(input$ntimes, gmyrfmodel()[[2]],myGoodfeature(), input$gclassid,
                        input$gsampleid,input$gruleout, input$gpsd,
-                       readmetadata(input$gmyresponseVector$datapath), gmyrfmodel())}
+                       readmetadata(input$gmyresponseVector$datapath), gmyrfmodel()[[1]])}
         
     })
     
@@ -350,15 +414,26 @@ server <- function(input, output, session){
         a <- getGoodfeature(getLevelData(readmydata(input$unknw$datapath),
                                          input$level),input$threshold,
                             input$samplePercent, input$norm)
-        if(input$choicemdl == "rfmodel"){
-           DT::datatable(getunknpredict(a,myrfmodel()),options = list(scrollX = TRUE ))
+        if(selectedmodel=='RF'){
+           DT::datatable(getunknpredict(a,myrfmodel()[[1]]),options = list(scrollX = TRUE ))
                          }
-        else if(input$choicemdl == "svmmodel"){
-          DT::datatable(getunknpredict(a,smyrfmodel()),options = list(scrollX = TRUE))
+        else if(selectedmodel=='svmmodel'){
+          DT::datatable(getunknpredict(a,smyrfmodel()[[1]]),options = list(scrollX = TRUE))
                         }
         else {
-           DT::datatable(getunknpredict(a,gmyrfmodel()), options = list(scrollX = TRUE))
+           DT::datatable(getunknpredict(a,gmyrfmodel()[[1]]), options = list(scrollX = TRUE))
         }        
+    })
+    
+    output$Preresult2 <- DT::renderDataTable({
+        shiny::req(input$unknw2$datapath)
+        shiny::req(input$upmodel$datapath)
+        b <- readRDS(input$upmodel$datapath)
+        a <- getGoodfeature(getLevelData(readmydata(input$unknw2$datapath),
+                                       b[[3]]),b[[4]],
+                          b[[5]], b[[6]])
+
+        DT::datatable(getunknpredict(a,b[[1]]),options = list(scrollX = TRUE ))
     })
     
     #######################################################################
@@ -371,8 +446,9 @@ server <- function(input, output, session){
     
     output$sAOC <-shiny:: renderPrint({
         shiny::req(input$smyresponseVector$datapath)
-        smyrfmodel()[[3]]
+        smyrfmodel()[[1]][[3]]
     })
+
     output$smyconfusionMatrix <-shiny:: renderUI({
         shiny::req(sv2$data)
         if(sv2$data == 1){
@@ -382,18 +458,18 @@ server <- function(input, output, session){
         }
     })
     output$splotconfumat <- shiny::renderPlot({
-        getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]])[1]
+        getconfuMat(smyrfmodel()[[1]][[2]], smyrfmodel()[[1]][[3]])[1]
     })
     output$sStatsconfu <- shiny::renderPrint({
-        shiny::req(smyrfmodel())
-        getconfuMat(smyrfmodel()[[2]],smyrfmodel()[[3]])[2]
+        shiny::req(smyrfmodel)
+        getconfuMat(smyrfmodel()[[1]][[2]],smyrfmodel()[[1]][[3]])[2]
     })
     
     ########################################################################
     
     output$gAOC <- shiny::renderPrint({
         shiny::req(input$gmyresponseVector$datapath)
-        gmyrfmodel()[[3]] #, smyrfmodel()[[1]])
+        gmyrfmodel()[[1]][[3]] #, smyrfmodel[[1]])
     })
     
     gv1 <- shiny::reactiveValues(data = NULL)
@@ -417,13 +493,58 @@ server <- function(input, output, session){
     shiny::observeEvent(input$gastats2,{ gv2$data <- 2})
     
     output$gplotconfumat <- shiny::renderPlot({
-        getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]])[gv2$data]
+        getconfuMat(gmyrfmodel()[[1]][[2]], gmyrfmodel()[[1]][[3]])[gv2$data]
     })
     
     output$gStatsconfu <- shiny::renderPrint({
-        shiny::req(gmyrfmodel())
-        getconfuMat(gmyrfmodel()[[2]],gmyrfmodel()[[3]])[gv2$data]
+        shiny::req(gmyrfmodel)
+        getconfuMat(gmyrfmodel()[[1]][[2]],gmyrfmodel()[[1]][[3]])[gv2$data]
     })
+    rf2 <- shiny::reactiveValues()
+    observe({
+        if(!is.null(myrfmodel()))
+       isolate(
+            rf2<<-myrfmodel()
+        )
+    })
+    output$downloadmodel <- shiny::downloadHandler(
+        filename <- function(){
+            paste("Model.rds")
+        },
+        content=function(file){
+            saveRDS(rf2,file=file)
+        }
+    )
+    rf3 <- shiny::reactiveValues()
+    observe({
+        if(!is.null(smyrfmodel()))
+            isolate(
+                rf3<<-smyrfmodel()
+            )
+    })
+    output$downloadmodelsvm <- shiny::downloadHandler(
+        filename <- function(){
+            paste("Model.rds")
+        },
+        content=function(file){
+            saveRDS(rf3,file=file)
+        }
+    )
+    rf4 <- shiny::reactiveValues()
+    observe({
+        if(!is.null(gmyrfmodel()[[1]][[3]]))
+            isolate(
+                rf4<<-gmyrfmodel()
+            )
+    })
+    output$downloadmodelglm <- shiny::downloadHandler(
+        filename <- function(){
+            paste("Model.rds")
+        },
+        content=function(file){
+            saveRDS(rf4,file=file)
+        }
+    )
     output$download1 <- shiny::renderUI({
         shiny::req(v1$data)
         if(v1$data == 1) {
@@ -449,16 +570,16 @@ server <- function(input, output, session){
         }
     })
     output$download3 <- shiny::renderUI({
-        if(!is.null(myrfmodel())) {
+        if(!is.null(myrfmodel)) {
             downloadButton('imptfeat', 'Download Output File')
         }
     })
-    
+
     output$down <- shiny::downloadHandler(
         filename = "iris.pdf",
         content = function(file){
             grDevices::pdf(file) # open the pdf device
-            print(graphics::plot(myrfmodel()[[3]]))
+            print(graphics::plot(myrfmodel()[[1]][[3]]))
             dev.off()
         }
     )
@@ -466,7 +587,7 @@ server <- function(input, output, session){
         filename = "iris.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
-            print( getconfuMat(myrfmodel()[[2]], myrfmodel()[[3]]))
+            print( getconfuMat(myrfmodel()[[1]][[2]], myrfmodel()[[1]][[3]]))
             dev.off()
         }
     )
@@ -474,7 +595,7 @@ server <- function(input, output, session){
         filename = "iris.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
-            print( getconfuMat(smyrfmodel()[[2]], smyrfmodel()[[3]]))
+            print( getconfuMat(smyrfmodel()[[1]][[2]], smyrfmodel()[[1]][[3]]))
             dev.off()
         }
     )
@@ -482,7 +603,7 @@ server <- function(input, output, session){
         filename = "iris.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
-            print( getconfuMat(gmyrfmodel()[[2]], gmyrfmodel()[[3]]))
+            print( getconfuMat(gmyrfmodel()[[1]][[2]], gmyrfmodel()[[1]][[3]]))
             dev.off()
         }
     )
@@ -490,7 +611,7 @@ server <- function(input, output, session){
         filename = "iris.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
-            print(plotimptfeatures(myrfmodel()[[3]], 10))
+            print(plotimptfeatures(myrfmodel()[[1]][[3]], 10))
             dev.off()
         }
     )

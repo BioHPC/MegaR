@@ -26,7 +26,7 @@ gettrainingdonerf <- function(mytable3, classid, sampleid,ruleout,psd,metadat,mr
     test <- otu_table_scaled_state1[-train_ind,]
     tunegrid <- expand.grid(.mtry=c(mrange[[1]]:mrange[[2]]))
     rf_gridsearch <- caret::train(as.factor(country)~., data=train, method="rf",
-                           tuneGrid=tunegrid)
+                           tuneGrid=tunegrid, trControl = caret::trainControl(savePredictions = T, classProbs = T, verboseIter = T))
     
     return(list(train, test, rf_gridsearch))
 }

@@ -26,6 +26,6 @@ gettrainingdoneglm <- function(mytable3,classid,sampleid,ruleout,psd,metadat){
     train<-droplevels(train)
     test <- otu_table_scaled_state1[-train_ind,]
     RF_state_classify <- caret::train(as.factor(country)~. , data =train,
-                                      method = "glm",  maxit=10000)
+                                      method = "glm",  maxit=10000, trControl = caret::trainControl(savePredictions = T, classProbs = T, verboseIter = T))
     return(list(train, test, RF_state_classify))
 }

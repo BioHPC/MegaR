@@ -31,6 +31,6 @@ gettrainingdonesvm <- function(mytable3, classid, sampleid, ruleout, psd,
     train<-droplevels(train)
     test <- otu_table_scaled_state1[-train_ind,]
     RF_state_classify <- caret::train(as.factor(country)~. ,
-                                      data =train,method = "svmLinear",  tuneGrid = tunegrid)
+                                      data =train,method = "svmLinear",  tuneGrid = tunegrid,trControl = caret::trainControl(savePredictions = T, classProbs = T, verboseIter = T))
     return(list(train, test, RF_state_classify))
 }
