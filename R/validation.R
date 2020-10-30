@@ -61,7 +61,7 @@ validation<-function(Num,modelclas,mytable3,classid,sampleid,ruleout,psd,
             Acc3[i] <- RF_state_classify_loocv$results$Accuracy
             Kpp3[i] <- RF_state_classify_loocv$results$Kappa
         }
-        progress$set(message = "Working...",value = ((i/Num)*100))
+        progress$inc(i/Num, detail=paste("Validation set", i+1))
     }
     on.exit(progress$close())
     sprintf("The 10 fold cross validated obtained from the average of %i
