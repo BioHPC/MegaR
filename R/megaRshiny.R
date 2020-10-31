@@ -106,7 +106,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                                       "All Level"),
                                                                                           selected = "Genus"),
                                                                      shiny:: numericInput(
-                                                                         "threshold", "THRESHOLD",min= 0,
+                                                                         "threshold", "Threshold",min= 0,
                                                                          max = 100,  step = 0.001,
                                                                          value = 0.003),
                                                                      shiny::sliderInput(
@@ -123,12 +123,12 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                            shiny::sidebarLayout(shiny::sidebarPanel(
                                                                                shiny::fileInput(
                                                                                    inputId = "gmyresponseVector",
-                                                                                   label ="Please input the class vector",multiple = FALSE),
-                                                                               shiny::numericInput("gclassid",label ="column number for classid",
+                                                                                   label ="Please upload a meatadata file",multiple = FALSE),
+                                                                               shiny::numericInput("gclassid",label ="Column number for class ID",
                                                                                                    min = 1, max = 100, value =7),
-                                                                               shiny::numericInput("gsampleid",label= "column number for sampleid",
+                                                                               shiny::numericInput("gsampleid",label= "Column number for sample ID",
                                                                                                    min = 1, max = 100, value =53),
-                                                                               shiny::numericInput("gpsd","percentage of data in training",
+                                                                               shiny::numericInput("gpsd","Percentage of data in training",
                                                                                                    min = 60, max = 100, value = 90),
                                                                                shiny::uiOutput("gselectclass"),#shiny::textInput("gruleout",label = "Remove class", value = "EST"),
                                                                                shiny::actionButton("runglm","Run")
@@ -145,13 +145,13 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                            
                                                            shiny:: tabPanel("Random Forest", shiny::sidebarLayout(
                                                                shiny::sidebarPanel(shiny::fileInput(
-                                                                   inputId = "myresponseVector",label="Please input the class vector",
+                                                                   inputId = "myresponseVector",label="Please upload a meatadata file",
                                                                    multiple = FALSE),
-                                                                   shiny::numericInput("classid",label ="column number for class info",
+                                                                   shiny::numericInput("classid",label ="Column number for class ID",
                                                                                        min = 1, max = 100, value =7),
-                                                                   shiny:: numericInput("sampleid", label = "column number for sampleid",
+                                                                   shiny:: numericInput("sampleid", label = "Column number for sample ID",
                                                                                         min = 1, max = 100, value =2),
-                                                                   shiny::numericInput("psd", "percentage of data in training",
+                                                                   shiny::numericInput("psd", "Percentage of data in training",
                                                                                        min = 60, max = 100, value = 90),
                                                                    shiny::uiOutput("selectclass"),#shiny::textInput("ruleout", label = "Remove class", value = "EST"),
                                                                    shiny::sliderInput("range", "Number of variable at split",
@@ -176,10 +176,10 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                            ),
                                                            shiny:: tabPanel("SVM",shiny::sidebarLayout(shiny::sidebarPanel(
                                                                shiny::fileInput(inputId = "smyresponseVector",
-                                                                                label = "Please input the class vector", multiple = FALSE),
-                                                               shiny::numericInput("sclassid", label = "column number for classid",
+                                                                                label = "Please upload a meatadata file", multiple = FALSE),
+                                                               shiny::numericInput("sclassid", label = "Column number for class ID",
                                                                                    min = 1, max = 100, value =8),
-                                                               shiny::numericInput("ssampleid", label = "column number for sampleid",
+                                                               shiny::numericInput("ssampleid", label = "Column number for sample ID",
                                                                                    min = 1, max = 100, value =53),
                                                                shiny::numericInput("spsd", "percentage of data in training",
                                                                                    min = 60, max = 100, value = 90),
@@ -575,7 +575,7 @@ server <- function(input, output, session){
     })
 
     output$down <- shiny::downloadHandler(
-        filename = "iris.pdf",
+        filename = "stats_plot.pdf",
         content = function(file){
             grDevices::pdf(file) # open the pdf device
             print(graphics::plot(myrfmodel()[[1]][[3]]))
@@ -583,7 +583,7 @@ server <- function(input, output, session){
         }
     )
     output$confudown <- shiny::downloadHandler(
-        filename = "iris.pdf",
+        filename = "confusion_matrix.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
             print( getconfuMat(myrfmodel()[[1]][[2]], myrfmodel()[[1]][[3]]))
@@ -591,7 +591,7 @@ server <- function(input, output, session){
         }
     )
     output$sconfudown <- shiny::downloadHandler(
-        filename = "iris.pdf",
+        filename = "confusion_matrix.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
             print( getconfuMat(smyrfmodel()[[1]][[2]], smyrfmodel()[[1]][[3]]))
@@ -599,7 +599,7 @@ server <- function(input, output, session){
         }
     )
     output$gconfudown <- shiny::downloadHandler(
-        filename = "iris.pdf",
+        filename = "confusion_matrix.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
             print( getconfuMat(gmyrfmodel()[[1]][[2]], gmyrfmodel()[[1]][[3]]))
@@ -607,7 +607,7 @@ server <- function(input, output, session){
         }
     )
     output$imptfeat <- shiny::downloadHandler(
-        filename = "iris.pdf",
+        filename = "important_features.pdf",
         content = function(file) {
             grDevices::pdf(file) # open the pdf device
             print(plotimptfeatures(myrfmodel()[[1]][[3]], 10))
