@@ -17,6 +17,7 @@ Description: MegaR helps in building predictive models to classify metagenomic
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
+biocViews:
 Imports:
     shiny, 
     shinythemes, 
@@ -29,5 +30,7 @@ Imports:
     caret,
     DT,
     graphics,
-    MLeval
+    MLeval,
+    edgeR,
+    biomaRt
 RoxygenNote: 7.0.0
