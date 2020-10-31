@@ -115,7 +115,7 @@ Upload a metadata file containing information about the sample dataset. The meta
 * For the T1D experiment, upload **metadata.tsv** file in the T1D dataset.
 
 #### Column number for class info ####
-Provide a column number for class info. For the T1D expeirment, column 7 (T1D_Diagnosed) has the class values (T, F) where T is True and F is False.
+Provide a column number for class info. For the T1D expeirment, column 7 (T1D_Diagnosed) has the class values (t, f) where t is True and f is False.
 
 * For the T1D experiment, provide **7** for this field.
 
@@ -130,21 +130,21 @@ Then select the percentage of data that you want to use to train a model. One ca
 * For the T1D experiment, provide **80** for this field.
 
 #### Select classification labels ####
-Provide lables of the classification. For example, the T1D metadata column 2 has the class values (T, F). MegaR automatically pulls the class labels from the provided column number for class info.
+Provide lables of the classification. For example, the T1D metadata column 2 has the class values (t, f) where t is True and f is False. MegaR automatically pulls the class labels from the provided column number for the class info.
 
-* For the T1D experiment, select **T** and **F** in this field.
+* For the T1D experiment, select **f** and **t** in this field.
 
 #### Number of variable at split ####
 This field is the number of variable that is randomly collected to be sampled at each split time. **Accuracy** results will show the results by this randomly selected predictors. The default value is from **1** to **101**. 
 
 * For the T1D experiment, select **41** and **81** in this field.
 
+
 The error rate of prediction during training a model is given by the plot under error rate.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/trainerror.PNG) 
 
 The statistics can be viewed using Stats tab.
-
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/teststats.PNG)
 
