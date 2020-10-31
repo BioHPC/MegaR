@@ -174,7 +174,7 @@ Finally, MegaR provides the option to download the trained model for later use i
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/download.PNG)
 
-### Validation**
+### Validation ###
 Cross-validation is a manner to access, judge, and review the performance of machine learning models. First and foremost, cross validation is essential to validate the model accuracy and model bias. This implies that the developed model should not be overfitted and not having bias. 
 To make a better model, all data set is not usually used for the training purpose, but split into training and validating/testing sets.  For example, in k-fold cross validation, the dataset is shuffled and divided into k sub samples. The k-1 samples are used as a training dataset and the single partition is used for validation. This process is repeated k times to represent the model performance. MegaR provides cross validation options allowing for an accurate prediction measure. The variance in fitting the model tends to be higher if it is fitted to a small dataset, therefore k-fold cross validation can have a high variance. MegaR provides users to select N independent runs of the 10-fold cross validation to minimize such a high variance.
 
