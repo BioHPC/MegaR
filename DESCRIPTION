@@ -32,5 +32,6 @@ Imports:
     graphics,
     MLeval,
     edgeR,
-    biomaRt
+    biomaRt,
+    kernlab
 RoxygenNote: 7.0.0
