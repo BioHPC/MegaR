@@ -33,5 +33,6 @@ Imports:
     MLeval,
     edgeR,
     biomaRt,
-    kernlab
+    kernlab,
+    e1071
 RoxygenNote: 7.0.0
