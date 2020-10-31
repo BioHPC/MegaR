@@ -139,44 +139,50 @@ This field is the number of variable that is randomly collected to be sampled at
 
 * For the T1D experiment, select **41** and **81** in this field.
 
+### Model Results ###
 
+#### Train Error ####
 The error rate of prediction during training a model is given by the plot under error rate.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/trainerror.PNG) 
 
-The statistics can be viewed using Stats tab.
+#### Test Error ####
+The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
 
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/testerror.PNG)
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/teststats.PNG)
 
 MegaR also provides the user with an AUC graph for further analysis under the **AUC** tab.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/AUC.PNG)
-
-For random forest model, user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. MegaR selects the best accuracies from among the selected parameter for model building.
-
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy.PNG)
-
-An additional feature of tool that can improve accuracy is the **select level to classify** tab. When more than two classes are present, only the classes that are examined for classification can be selected. This also allows the removal of control and other less important classes from the model, thus increasing the model accuracy.
-
-Plots can be downloaded by clicking the download the plot button to save for future use.
-
-The error rate of prediction on test set is a better estimate of model accuracy and it can be estimated using confusion matrix generated under confusion Matrix tab. The Statistics of how well the model performs can also be obtained using the statistics tab.
-
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/testerror.PNG)
-
+#### Important feature ####
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/features.PNG)
- 
-Finally, MegaR provides the option to download the trained model for later use in Prediction. 
+
+#### Accuracy ####
+For the random forest model, a user can select the number of predictors to be used during each split. Similarly, users can also select the range of cost to be applied to support vector machines. A plot for the accuracy of the model based on selected parameter can be seen in accuracy tab. MegaR selects the best accuracies from among the selected parameter for model building. An additional feature of tool that can improve accuracy is the **Select level to classify** tab. When more than two classes are present, only the classes that are examined for classification can be selected. This also allows the removal of control and other less important classes from the model, thus increasing the model accuracy.
+
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy.PNG)
+
+#### AUC ####
+AUC - ROC curve is a performance measurement for classification problem at various thresholds settings. MegaR visualize the AUC-ROC plot.
+
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/AUC.PNG)
+
+#### Download ####
+Finally, MegaR provides the option to download the trained model for later use in Prediction. If a user clicks **Download Model**, the RDS model file is generated and downloaded. A user can load this model for the fast prediction of unknown samples without traing the model again.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/download.PNG)
 
-**Validation**
- ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Validation.PNG)
- 
-**Prediction**
+### Validation**
+Cross-validation is a manner to access, judge, and review the performance of machine learning models. First and foremost, cross validation is essential to validate the model accuracy and model bias. This implies that the developed model should not be overfitted and not having bias. 
+To make a better model, all data set is not usually used for the training purpose, but split into training and validating/testing sets.  For example, in k-fold cross validation, the dataset is shuffled and divided into k sub samples. The k-1 samples are used as a training dataset and the single partition is used for validation. This process is repeated k times to represent the model performance. MegaR provides cross validation options allowing for an accurate prediction measure. The variance in fitting the model tends to be higher if it is fitted to a small dataset, therefore k-fold cross validation can have a high variance. MegaR provides users to select N independent runs of the 10-fold cross validation to minimize such a high variance.
 
+* For the T1D experiment, provide **3** for this field.
+
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Validation.PNG)
+ 
+### Prediction ###
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data. 
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/prediction.PNG)
