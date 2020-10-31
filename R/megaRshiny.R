@@ -29,6 +29,10 @@
 #' @importFrom shiny stopApp
 #' @importFrom shiny textInput
 #' @importFrom shiny navbarPage
+#' @importFrom biomaRt listDatasets
+#' @importFrom biomaRt useMart
+#' @importFrom biomaRt listAttributes
+#' @importFrom biomaRt listFilters
 #' @importFrom DT renderDataTable
 #' @importFrom DT dataTableOutput
 #' @importFrom DT datatable
@@ -127,7 +131,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                shiny::numericInput("gpsd","percentage of data in training",
                                                                                                    min = 60, max = 100, value = 90),
                                                                                shiny::uiOutput("gselectclass"),#shiny::textInput("gruleout",label = "Remove class", value = "EST"),
-                                                                               shiny::actionButton("runglm","Done")
+                                                                               shiny::actionButton("runglm","Run")
                                                                            ),
                                                                            shiny:: mainPanel(shiny::tabsetPanel(shiny:: tabPanel("Train Error",
                                                                                                                                  shiny::verbatimTextOutput("gAOC")),
@@ -152,7 +156,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                    shiny::uiOutput("selectclass"),#shiny::textInput("ruleout", label = "Remove class", value = "EST"),
                                                                    shiny::sliderInput("range", "Number of variable at split",
                                                                                       min = 1, max = 1000, value = c(1,101), round = T, step = 5),
-                                                                   shiny::actionButton("runrf","Done")
+                                                                   shiny::actionButton("runrf","Run")
                                                                ),
                                                                shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Train Error",
                                                                                                                    shiny::uiOutput("AOC"),
@@ -183,7 +187,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                shiny::sliderInput("srange", "Cost for non-linearity",
                                                                                   min = 0, max = 5, value = c(0.02,0.8), step = 0.01),
                                                                shiny::textInput("svmtd", label = "SVM Method", value = "svmLinear"),
-                                                               shiny::actionButton("runsvm","Done")
+                                                               shiny::actionButton("runsvm","Run")
                                                            ),
                                                            shiny::mainPanel(shiny::tabsetPanel(
                                                             shiny::tabPanel("Train Error", shiny::verbatimTextOutput("sAOC")),
@@ -250,24 +254,24 @@ server <- function(input, output, session){
         return(getGoodfeature(myLevelData(),input$threshold,input$samplePercent,
                               input$norm))
     })
-    progressbarrf <- shiny::observeEvent(input$runrf,{
-        progress <- shiny::Progress$new(style = 'notification')
-        progress$set(message = "Ready to plot", value = 100)
-        Sys.sleep(3)
-        on.exit(progress$close())
-    })
-    progressbarglm <- shiny::observeEvent(input$runglm,{
-        progress <- shiny::Progress$new(style = 'notification')
-        progress$set(message = "Ready to plot", value = 100)
-        Sys.sleep(3)
-        on.exit(progress$close())
-    })
-    progressbarsvm <- shiny::observeEvent(input$runsvm,{
-        progress <- shiny::Progress$new(style = 'notification')
-        progress$set(message = "Ready to plot", value = 100)
-        Sys.sleep(3)
-        on.exit(progress$close())
-    })
+    #progressbarrf <- shiny::observeEvent(input$runrf,{
+        #progress <- shiny::Progress$new(style = 'notification')
+        #progress$set(message = "Ready to plot", value = 100)
+        #Sys.sleep(3)
+        #on.exit(progress$close())
+    #})
+    #progressbarglm <- shiny::observeEvent(input$runglm,{
+        #progress <- shiny::Progress$new(style = 'notification')
+        #progress$set(message = "Ready to plot", value = 100)
+        #Sys.sleep(3)
+        #on.exit(progress$close())
+    #})
+    #progressbarsvm <- shiny::observeEvent(input$runsvm,{
+        #progress <- shiny::Progress$new(style = 'notification')
+        #progress$set(message = "Ready to plot", value = 100)
+        #Sys.sleep(3)
+        #on.exit(progress$close())
+    #})
     myrfmodel <- shiny::eventReactive(input$runrf, {
         progress <- shiny::Progress$new(style = 'notification')
         progress$set(message = "Working...",value = 100)
