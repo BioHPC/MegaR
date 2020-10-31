@@ -118,7 +118,7 @@ Finally, MegaR provides the option to download the trained model for later use i
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/download.PNG)
 
 **Validation**
- ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/validation.png)
+ ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Validation.PNG)
  
 **Prediction**
 
