@@ -125,4 +125,4 @@ Finally, MegaR provides the option to download the trained model for later use i
 Finally, we can upload unknown test set and get the prediction on which category they fall into as a list. Unknown set must be biom file if model is developed from qiime data and merged metaphlan table if model is developed from the metaphlan data. It is also possible to upload a previously trained model for prediction using the **Use custom model** tab under **Prediction**. Then, a user can upload the downloaded RDS model along with the unknown dataset to predict the phenotype fast without training it again.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/prediction.PNG)
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_CustomModel.PNG)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_CustomModel.png)
