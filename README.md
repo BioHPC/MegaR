@@ -82,12 +82,12 @@ MegaR provides sample data from the DIABIMMUNE project. If you clone or download
 After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning.
 
 #### Criteria for feature selection ####
-**Genus Level** and **Species Level** tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. For the T1D experiment, 
+**Genus Level** and **Species Level** tabs return genus and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. For the T1D experiment, 
 
 * Clicking **Species Level** for feature selection.
 
 #### Threshold ####
-This field is getting a floating number to remove profiles and their abudnaces below the threshold value. Default value is **0.003**. 
+This field is getting a floating number to remove profiles and their abundances below the threshold value. Default value is **0.003**. 
 
 * For the T1D experiment, just leave the the deafult value (0.03).
 
@@ -152,8 +152,6 @@ The error rate of prediction on test set is a better estimate of model accuracy 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/testerror.PNG)
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/teststats.PNG)
 
-MegaR also provides the user with an AUC graph for further analysis under the **AUC** tab.
-
 #### Important feature ####
 From a practical perspective, it is important to identify features that are important in identifying the class of metagenomic sample. The top ten important species or genus crucial in identifying the class of sample along with their variable importance is shown under the **Important Feature** tab.
 
@@ -165,12 +163,12 @@ For the random forest model, a user can select the number of predictors to be us
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/accuracy.PNG)
 
 #### AUC ####
-AUC - ROC curve is a performance measurement for classification problem at various thresholds settings. MegaR visualize the AUC-ROC plot.
+AUC - ROC curve is a performance measurement for classification problem at various thresholds settings. MegaR visualize the AUC-ROC plot. 
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/AUC.PNG)
 
 #### Download ####
-Finally, MegaR provides the option to download the trained model for later use in Prediction. If a user clicks **Download Model**, the RDS model file is generated and downloaded. A user can load this model for the fast prediction of unknown samples without traing the model again.
+Finally, MegaR provides the option to download the trained model for later use in Prediction. If a user clicks **Download Model**, the RDS model file is generated and downloaded. A user can load this model for the fast prediction of unknown samples without training the model again.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/download.PNG)
 
