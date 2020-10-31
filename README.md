@@ -97,7 +97,7 @@ The **Percentage of Sample** slider bar can be adjusted to select the percentage
 * For the T1D experiment, just leave the the deafult value (5%).
 
 #### Normalization ####
-There is a choice for normalizing the data. MegaR provides three choices for data normalization: **Quantile**, **TMM (Trimmed Mean of M-values)**, and **NO**. After choosing the desired normalization, the processed data that is ready for building machine learning models is seen under the data tab. 
+There is a choice for normalizing the data. MegaR provides fours choices for data normalization: **Cumulative Sum Scaling (CSS)**, **Quantile**, **Trimmed Mean of M-values (TMM)**, and **NO**. After choosing the desired normalization, the processed data that is ready for building machine learning models is seen under the data tab. 
 
 * For the T1D experiment, select **NO**. 
 
