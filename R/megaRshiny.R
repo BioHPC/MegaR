@@ -219,7 +219,6 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                  shiny:: mainPanel(shiny::tabsetPanel(shiny::tabPanel("Prediction",
                                                                                                       DT::dataTableOutput("Preresult", width = 800))
                                                  )))),
-                                             shiny:: tabPanel("Use default model"),
                                              shiny:: tabPanel("Use custom model",
                                                  shiny::sidebarLayout(shiny::sidebarPanel(
                                                      shiny::fileInput(inputId = 'unknw2',
