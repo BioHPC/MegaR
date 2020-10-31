@@ -103,11 +103,43 @@ There is a choice for normalizing the data. MegaR provides three choices for dat
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/preprocessing.gif)
 
-**Model Development**
+### Model Development ###
 
-There are three machine learning models available for classification. Generalized Linear Model (GLM), Random Forest Model and Support Vector Machines. Select the appropriate machine learning model.
+There are three machine learning models available for classification. **Generalized Linear Model (GLM)**, **Random Forest Model**, and **Support Vector Machines**. If a user click the **Model building** tabl, the user can select the appropriate machine learning model. 
 
-Upload the metadata that contains information about the sample. The metadata should be tab separated files with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample id in the metadata must match exactly to sample id in the initial metaphlan/qiime file. Mention which column in metadata contains the id that matches  the initial metaphlan and qiime result and also the column where the class this sample are stored is mentioned. Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. The error rate of prediction during training a model is given by the plot under error rate.
+* For the T1D experiment, select **Random Forest**. 
+
+#### Upload a metadata file ####
+Upload a metadata file containing information about the sample dataset. The metadata should be tab-separated file with rows containing sample ids and columns containing the other information like class that each sample belongs to. The sample ID in the metadata **must match** exactly to sample ID in the initial metaphlan/qiime file. 
+
+* For the T1D experiment, upload **metadata.tsv** file in the T1D dataset.
+
+#### Column number for class info ####
+Provide a column number for class info. For the T1D expeirment, column 7 (T1D_Diagnosed) has the class values (T, F) where T is True and F is False.
+
+* For the T1D experiment, provide **7** for this field.
+
+#### Column number for sample ID ####
+Provide a column number for sample IDs. For the T1D expeirment, column 2 (Gid_shotgun) has the sample IDs. 
+
+* For the T1D experiment, provide **2** for this field.
+
+#### Percentage of data in training ####
+Then select the percentage of data that you want to use to train a model. One can use as much as 100% of the data but then there will be no test set to generate confusion matrix. 
+
+* For the T1D experiment, provide **80** for this field.
+
+#### Select classification labels ####
+Provide lables of the classification. For example, the T1D metadata column 2 has the class values (T, F). MegaR automatically pulls the class labels from the provided column number for class info.
+
+* For the T1D experiment, select **T** and **F** in this field.
+
+#### Number of variable at split ####
+This field is the number of variable that is randomly collected to be sampled at each split time. **Accuracy** results will show the results by this randomly selected predictors. The default value is from **1** to **101**. 
+
+* For the T1D experiment, select **41** and **81** in this field.
+
+The error rate of prediction during training a model is given by the plot under error rate.
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/trainerror.PNG) 
 
