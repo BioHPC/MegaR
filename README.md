@@ -126,6 +126,6 @@ Finally, we can upload unknown test set and get the prediction on which category
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/prediction.PNG)
 
-It is also possible to upload a previously trained model for prediction using the **Use custom model** tab under **Prediction**. Then, a user can upload the downloaded RDS model along with the unknown dataset to predict the phenotype fast without training it again.
+It is also possible to upload a previously trained model for prediction using the **Use custom model** tab under **Prediction**. If a user click the **Prediction** and select **Use cumstome model**, then a user can upload the downloaded RDS model (trained model) along with the unknown dataset to predict the phenotype fast without training the model again.
 
-![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_CustomModel2.png)
+![](https://github.com/BioHPC/MegaR/blob/master/screenshot/Prediction_CustomModel3.png)
