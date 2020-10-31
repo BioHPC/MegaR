@@ -67,7 +67,7 @@ In RStudio, use following command:
 > MegaR() 
 ```
 
-**Data Input**
+### Data Input ###
 
 MegaR can take both OTU table and BIOM file from popular metagenomic profiling tools, [metaphlan](https://www.nature.com/articles/nmeth.2066) and [qiime](https://www.nature.com/articles/nmeth.f.303).
 MegaR provides sample data from the DIABIMMUNE project. If you clone or download the full MegaR package, the data files are located in data folder. Otherwise, the data set used for this example is the T1D dataset that can be downloaded from [here](https://github.com/BioHPC/MegaR/tree/master/data/WGS/T1D.zip). 
@@ -78,9 +78,28 @@ MegaR provides sample data from the DIABIMMUNE project. If you clone or download
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/input.gif)
 
-**Data Preprocessing**
+### Data Preprocessing ###
+After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning.
 
-After the data is loaded, it can be preprocessed to allow efficient machine leaning. Click preprocess tab and select the appropriate taxonomic level information to use for machine learning. Genus Level and Species Level tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. The slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Finally, there is a choice for normalizing the data. MegaR provides three choixes for data normalization: Quantile, TMM, and none. After choosing the desired normalization, the processed data that is ready for building machine learning models is seen under the data tab.
+#### Criteria for feature selection ####
+**Genus Level** and **Species Level** tabs return genuses and species level from the dataset as the feature. **All Level** tab tracks back the taxon level for unclassified higher order. For the T1D experiment, 
+
+* Clicking **Species Level** for feature selection.
+
+#### Threshold ####
+This field is getting a floating number to remove profiles and their abudnaces below the threshold value. Default value is **0.003**. 
+
+* For the T1D experiment, just leave the the deafult value (0.03).
+
+#### Percentage of Sample #### 
+The **Percentage of Sample** slider bar can be adjusted to select the percentage of sample that should include the threshold amount of abundance present in the data. Default value is **5%**. 
+
+* For the T1D experiment, just leave the the deafult value (5%).
+
+#### Normalization ####
+There is a choice for normalizing the data. MegaR provides three choices for data normalization: **Quantile**, **TMM (Trimmed Mean of M-values)**, and **NO**. After choosing the desired normalization, the processed data that is ready for building machine learning models is seen under the data tab. 
+
+* For the T1D experiment, select **NO**. 
 
 ![](https://github.com/BioHPC/MegaR/blob/master/screenshot/preprocessing.gif)
 
