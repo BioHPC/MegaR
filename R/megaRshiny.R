@@ -114,7 +114,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                      shiny:: helpText(
                                                                          "OTU that have less than the threshold value in given percentage of sample are
                                                                          removed."),
-                                                                     shiny:: radioButtons('norm' ,"Normalization",choices = c(TMM="TMM", Quantile = "quantile",NO="none"),
+                                                                     shiny:: radioButtons('norm' ,"Normalization",choices = c(TMM="TMM", Quantile = "quantile", CSS = "CSS", NO="none"),
                                                                                           selected = "")),
                                                                  shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Data",DT::dataTableOutput(
                                                                      "mGoodTbl", width = 800))))))),
@@ -123,7 +123,7 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                            shiny::sidebarLayout(shiny::sidebarPanel(
                                                                                shiny::fileInput(
                                                                                    inputId = "gmyresponseVector",
-                                                                                   label ="Please upload a meatadata file",multiple = FALSE),
+                                                                                   label ="Please upload a metadata file",multiple = FALSE),
                                                                                shiny::numericInput("gclassid",label ="Column number for class ID",
                                                                                                    min = 1, max = 100, value =7),
                                                                                shiny::numericInput("gsampleid",label= "Column number for sample ID",
@@ -139,13 +139,13 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                                                                                 shiny:: actionButton("gaplot2", "Plot test error"),
                                                                                                                                 shiny:: uiOutput("gdownload2") ,
                                                                                                                                 shiny:: actionButton("gastats2", "Stats of the test error")),
-                                                                                                                shiny::tabPanel("AUC", shiny::imageOutput('aucglm')),
+                                                                                                                shiny::tabPanel("AUC", shiny::imageOutput('aucglm'), shiny::uiOutput("AUCdownloadglm")),
                                                                                                                 shiny::tabPanel("Download",shiny::downloadButton('downloadmodelglm',"Download Model"))
                                                                                                                 )))),
                                                            
                                                            shiny:: tabPanel("Random Forest", shiny::sidebarLayout(
                                                                shiny::sidebarPanel(shiny::fileInput(
-                                                                   inputId = "myresponseVector",label="Please upload a meatadata file",
+                                                                   inputId = "myresponseVector",label="Please upload a metadata file",
                                                                    multiple = FALSE),
                                                                    shiny::numericInput("classid",label ="Column number for class ID",
                                                                                        min = 1, max = 100, value =7),
@@ -161,22 +161,21 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                                shiny::mainPanel(shiny::tabsetPanel(shiny::tabPanel("Train Error",
                                                                                                                    shiny::uiOutput("AOC"),
                                                                                                                    shiny::actionButton("aplot1",
-                                                                                                                                       "Plot train error"),shiny::uiOutput(
-                                                                                                                                           "download1"),
-                                                                                                                   
+                                                                                                                                       "Plot train error"),
+                                                                                                                   shiny::uiOutput("trainerrordl"),
                                                                                                                    shiny::actionButton("astats1", "Stats of the train error")),
                                                                                                    shiny:: tabPanel("Test Error", shiny::uiOutput("myconfusionMatrix"),
                                                                                                                     shiny::uiOutput("download2"), shiny::actionButton("aplot2", "Plot test error"),
                                                                                                                     shiny::actionButton("astats2", "Stats of the test error")),
                                                                                                    shiny:: tabPanel("Important feature", shiny::imageOutput("imptFeature"),
                                                                                                                     shiny:: uiOutput("download3")),
-                                                                                                   shiny::tabPanel("Accuracy", shiny::imageOutput("accuracy")),
-                                                                                                   shiny::tabPanel("AUC", shiny::imageOutput('auc')),
+                                                                                                   shiny::tabPanel("Accuracy", shiny::imageOutput("accuracy"),shiny::uiOutput("download1")),
+                                                                                                   shiny::tabPanel("AUC", shiny::imageOutput('auc'), shiny::uiOutput("AUCdownload")),
                                                                                                    shiny::tabPanel("Download", shiny::downloadButton('downloadmodel', "Download Model")))))
                                                            ),
                                                            shiny:: tabPanel("SVM",shiny::sidebarLayout(shiny::sidebarPanel(
                                                                shiny::fileInput(inputId = "smyresponseVector",
-                                                                                label = "Please upload a meatadata file", multiple = FALSE),
+                                                                                label = "Please upload a metadata file", multiple = FALSE),
                                                                shiny::numericInput("sclassid", label = "Column number for class ID",
                                                                                    min = 1, max = 100, value =8),
                                                                shiny::numericInput("ssampleid", label = "Column number for sample ID",
@@ -193,10 +192,10 @@ ui <- shiny::fluidPage(theme=shinythemes::shinytheme("flatly"),
                                                             shiny::tabPanel("Train Error", shiny::verbatimTextOutput("sAOC")),
                                                            shiny::tabPanel("Test Error", shiny::uiOutput("smyconfusionMatrix"),
                                                                            shiny::actionButton("saplot2", "Plot test error"),
-                                                                           shiny::uiOutput("sdownload2") ,
+                                                                           shiny::uiOutput("sdownload2"),
                                                                            shiny::actionButton("sastats2", "Stats of the test error")),
-                                                           shiny::tabPanel("Accuracy", shiny::imageOutput("saccuracy")),
-                                                           shiny::tabPanel("AUC", shiny::imageOutput('aucsvm')),
+                                                           shiny::tabPanel("Accuracy", shiny::imageOutput("saccuracy"), shiny::uiOutput('saccuracydl')),
+                                                           shiny::tabPanel("AUC", shiny::imageOutput('aucsvm'), shiny::uiOutput("AUCdownloadsvm")),
                                                            shiny::tabPanel("Download",shiny::downloadButton('downloadmodelsvm',"Download Model"))
                                                            )))
                                                            
@@ -261,10 +260,10 @@ server <- function(input, output, session){
         #on.exit(progress$close())
     #})
     #progressbarglm <- shiny::observeEvent(input$runglm,{
-        #progress <- shiny::Progress$new(style = 'notification')
-        #progress$set(message = "Ready to plot", value = 100)
-        #Sys.sleep(3)
-        #on.exit(progress$close())
+    #    progress <- shiny::Progress$new(style = 'notification')
+    #    progress$set(message = "Ready to plot", value = 100)
+    #    Sys.sleep(3)
+    #    on.exit(progress$close())
     #})
     #progressbarsvm <- shiny::observeEvent(input$runsvm,{
         #progress <- shiny::Progress$new(style = 'notification')
@@ -367,16 +366,16 @@ server <- function(input, output, session){
         plotimptfeatures(myrfmodel()[[1]][[3]], 10)
     })
     output$auc <- shiny::renderPlot({shiny::req(myrfmodel)
-        x <- MLeval::evalm(myrfmodel()[[1]][[3]])
-        x$roc
+        rfauc <<- MLeval::evalm(myrfmodel()[[1]][[3]])
+        rfauc$roc
     })
     output$aucsvm <- shiny::renderPlot({shiny::req(smyrfmodel)
-        x <- MLeval::evalm(smyrfmodel()[[1]][[3]])
-        x$roc
+        svmauc <<- MLeval::evalm(smyrfmodel()[[1]][[3]])
+        svmauc$roc
     })
     output$aucglm <- shiny::renderPlot({shiny::req(gmyrfmodel)
-        x <- MLeval::evalm(gmyrfmodel()[[1]][[3]])
-        x$roc
+        glmauc <<- MLeval::evalm(gmyrfmodel()[[1]][[3]])
+        glmauc$roc
     })
     output$accuracy <- shiny::renderPlot({
         shiny::req(myrfmodel)
@@ -544,9 +543,15 @@ server <- function(input, output, session){
             saveRDS(rf4,file=file)
         }
     )
+    output$trainerrordl<- shiny::renderUI({
+        if(!is.null(myrfmodel)){
+            downloadButton('tedl','Download Output File')
+        }
+    })
     output$download1 <- shiny::renderUI({
-        shiny::req(v1$data)
-        if(v1$data == 1) {
+        #shiny::req(v1$data)
+        #if(v1$data == 1) {
+        if(!is.null(myrfmodel)){
             downloadButton('down', 'Download Output File')
         }
     })
@@ -557,8 +562,9 @@ server <- function(input, output, session){
         }
     })
     output$sdownload2 <- shiny::renderUI({
-        shiny::req(sv2$data)
-        if(sv2$data == 1){
+        #shiny::req(sv2$data)
+        #if(sv2$data == 1){
+        if(!is.null(smyrfmodel)){
             downloadButton('sconfudown', 'Download Output File')
         }
     })
@@ -573,7 +579,26 @@ server <- function(input, output, session){
             downloadButton('imptfeat', 'Download Output File')
         }
     })
-
+    output$saccuracydl <- shiny::renderUI({
+        if(!is.null(smyrfmodel)){
+            downloadButton("saccdl", "Download Output File")
+        }
+    })
+    output$AUCdownload <- shiny::renderUI({
+        if(!is.null(myrfmodel)) {
+            downloadButton("AUCdl", 'Download AUC Graph')
+        }
+    })
+    output$AUCdownloadsvm <- shiny::renderUI({
+        if(!is.null(myrfmodel)) {
+            downloadButton("AUCdlsvm", 'Download AUC Graph')
+        }
+    })
+    output$AUCdownloadglm <- shiny::renderUI({
+        if(!is.null(myrfmodel)) {
+            downloadButton("AUCdlglm", 'Download AUC Graph')
+        }
+    })
     output$down <- shiny::downloadHandler(
         filename = "stats_plot.pdf",
         content = function(file){
@@ -614,23 +639,64 @@ server <- function(input, output, session){
             dev.off()
         }
     )
+    output$AUCdl <- shiny::downloadHandler(
+        filename = "AUC.pdf",
+        content = function(file) {
+            grDevices::pdf(file)
+            print(rfauc$roc)
+            dev.off()
+        }
+    )
+    output$AUCdlsvm <- shiny::downloadHandler(
+        filename = "AUC.pdf",
+        content = function(file) {
+            grDevices::pdf(file)
+            print(svmauc$roc)
+            dev.off()
+        }
+    )
+    output$AUCdlglm <- shiny::downloadHandler(
+        filename = "AUC.pdf",
+        content = function(file) {
+            grDevices::pdf(file)
+            print(glmauc$roc)
+            dev.off()
+        }
+    )
+    output$saccdl <- shiny::downloadHandler(
+        filename = "Accuracy.pdf",
+        content = function(file) {
+            grDevices::pdf(file)
+            print(plot(smyrfmodel()[[1]][[3]]))
+            dev.off()
+        }
+    )
+    output$tedl <- shiny::downloadHandler(
+        filename = "Train_error.pdf",
+        content = function(file) {
+            grDevices::pdf(file)
+            print(graphics::plot(myrfmodel()[[1]][[3]]$finalModel,
+                                 main="Train Error during training model"))
+            dev.off()
+        }
+    )
     output$selectclass <- renderUI({
         req(input$myresponseVector$datapath)
-        selectInput("ruleout", "Select levels to classify",
+        selectInput("ruleout", "Select classification labels",
                     choices = levels(as.factor(readmetadata(
                         input$myresponseVector$datapath)[,input$classid])) , 
                     multiple = TRUE)
     })
     output$sselectclass <- renderUI({
         req(input$smyresponseVector$datapath)
-        selectInput("sruleout", "Select levels to classify",
+        selectInput("sruleout", "Select classification labels",
                     choices = levels(as.factor(readmetadata(
                         input$smyresponseVector$datapath)[,input$sclassid])) , 
                     multiple = TRUE)
     })
     output$gselectclass <- renderUI({
         req(input$gmyresponseVector$datapath)
-        selectInput("gruleout", "Select levels to classify",
+        selectInput("gruleout", "Select classification labels",
                     choices = levels(as.factor(readmetadata(
                         input$gmyresponseVector$datapath)[,input$gclassid])) , 
                     multiple = TRUE)
