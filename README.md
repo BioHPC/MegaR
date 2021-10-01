@@ -1,4 +1,9 @@
 # MegaR: A user-friendly interactive machine learning interface for metagenomic analysis to identify and predict disease sample accurately.
+
+### Cite this article
+Dhungel, E., Mreyoud, Y., Gwak, HJ. et al. MegaR: an interactive R package for rapid sample classification and phenotype prediction using metagenome profiles and machine learning. BMC Bioinformatics 22, 25 (2021). [https://doi.org/10.1186/s12859-020-03933-4](https://doi.org/10.1186/s12859-020-03933-4)
+
+### Summary
   
 Machine learning has been utilized in many applications from biomedical imaging to business analytics. Machine learning is stipulated to be a strong method for diagnostics and even for determining therapeutics in future as we move to personalized medicine. MegaR provides an unprecedented opportunity to develop machine learning models from metagenomic data available publicly as well as to perform classification of data samples based on the optimal model we developed. 
 
